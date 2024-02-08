@@ -1,6 +1,5 @@
 <template>
-  <div>prova app</div>
-  <div class="red">style scoper</div>
+  
   <AppProva/>
   
   <div>
@@ -10,6 +9,7 @@
 
 <script>
 import AppProva from './components/AppProva.vue';
+import Home from './views/Home.vue';
 export default{
         name:'App',
         data() {
@@ -19,6 +19,7 @@ export default{
         },
         components:{
           AppProva,
+          Home,
         }
     }
 </script>

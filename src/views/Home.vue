@@ -1,5 +1,5 @@
 <template>
-    <div class="mt-5">prova view</div>
+    <div class="mt-5">aaaasas</div>
 </template>
 
 <script>
