@@ -4,12 +4,14 @@
   <AppProva/>
   
   <div>
-    <router-view ></router-view>
+    <router-view></router-view>
   </div>
+  <AppFooter />
 </template>
 
 <script>
 import AppProva from './components/AppProva.vue';
+import AppFooter from './components/AppFooter.vue';
 export default{
         name:'App',
         data() {
@@ -19,6 +21,7 @@ export default{
         },
         components:{
           AppProva,
+          AppFooter,
         }
     }
 </script>

@@ -13,3 +13,14 @@ $fa-font-path: '../webfonts';
 .green{
     color: $green-color;
 }
+footer{
+    background-color: $marian-blue;
+    color:white;
+    h3{
+        color:$pacific-cyan
+    }
+    .logo-text{
+        color:$pacific-cyan;
+        font-weight: 700;
+    }
+}
