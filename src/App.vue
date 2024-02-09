@@ -1,5 +1,5 @@
 <template>
-  
+  <AppNav/>
   <AppProva/>
   
   <div>
@@ -12,6 +12,7 @@
 import AppProva from './components/AppProva.vue';
 import AppFooter from './components/AppFooter.vue';
 import Home from './views/Home.vue';
+import AppNav from './components/AppNav.vue'
 export default{
         name:'App',
         data() {
@@ -23,6 +24,7 @@ export default{
           AppProva,
           AppFooter,
           Home,
+          AppNav,
         }
     }
 </script>
