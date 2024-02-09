@@ -1,11 +1,11 @@
 <template>
   <AppNav/>
-  <AppProva/>
+  
   
   <div>
     <router-view></router-view>
   </div>
-  <AppFooter />
+  <!-- <AppFooter /> -->
 </template>
 
 <script>

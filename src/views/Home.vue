@@ -1,15 +1,17 @@
 <template>
-    <div class="mt-5">aaaasas</div>
+    <HeroComponent/>
     <FeaturedDoctors/>
     <CallActionComponent/>
+    
 
 </template>
 
 <script>
 import FeaturedDoctors from '@/components/FeaturedDoctors.vue';
 import CallActionComponent from '@/components/CallActionComponent.vue';
+import HeroComponent from '@/components/HeroComponent.vue';
 export default{
-    name: 'ProvaView',
+    name: 'Home',
     data(){
         return{
             
@@ -18,6 +20,7 @@ export default{
     components:{
         FeaturedDoctors ,
         CallActionComponent,
+        HeroComponent,
 
     }
 }
