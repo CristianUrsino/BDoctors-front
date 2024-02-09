@@ -1,6 +1,5 @@
 <template>
-    <div class="mt-5">{{this.prova}} </div>
-    <div class="green">style variable</div>
+   
 </template>
 
 <script>
