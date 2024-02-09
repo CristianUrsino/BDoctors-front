@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-white mt-5">
+    <div class="bg-white mt-5 hover-effect">
         <div class="roundup">
             <img src="https://picsum.photos/id/237/200/300" alt="" class="w-100">
         </div>
@@ -34,6 +34,10 @@
     
     position: relative;
     border-radius: 20px;
+    transition: transform 0.3s;
+}
+.hover-effect:hover {
+  transform: scale(1.1); 
 }
 .roundup{
     border-radius: 50%;
@@ -48,5 +52,8 @@
 }
 .my-card-adjust{
     padding-top: 60px;
+}
+.roundup:hover img {
+  filter: brightness(0.8); 
 }
 </style>
