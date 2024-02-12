@@ -4,12 +4,12 @@
   <!--container menu-->
   <div class="nav-menu"> 
   <!--click-->
-    <div >
+   
       <ul class="nav-small">
     <li><img class="border-rounded logo " src="/images/bdoctors1.jpg" alt=""></li>
      <li><i class="fa-solid fa-bars" @click="showMenu()"> </i></li>
   </ul>
-  </div> 
+  
    
       
    
@@ -25,6 +25,7 @@
           <li>Menu</li>
           <li>About</li>
           <li>Contact</li>
+        
         </ul>
 
         <button type="button" class="btn btn-light">Login</button>
@@ -86,6 +87,7 @@ padding: 0;
 li {
 padding: 0 10px;
 cursor: pointer;
+font-size: 1.5rem;
 }
 }
 i {
@@ -95,6 +97,7 @@ display: none;
 button {
   color: white;
   background-color: #0077b6ff;
+  font-size: 1.5rem;
 }
 
 .border-rounded{
@@ -117,7 +120,7 @@ z-index: 5000;
 }
 .open-menu {
 opacity: 1;
-height: 150px;
+//height: 150px;
 }
 .closed-menu {
 opacity: 0;
