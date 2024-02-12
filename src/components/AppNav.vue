@@ -101,7 +101,7 @@ button {
 }
 
 .border-rounded{
-    border-radius: 50px;
+    border-radius: 25px;
     overflow: hidden;
 }
 .nav-small{
