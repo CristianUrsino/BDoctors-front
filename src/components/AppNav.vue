@@ -4,19 +4,30 @@
   <!--container menu-->
   <div class="nav-menu"> 
   <!--click-->
-    <i class="fas fa-bars" @click="showMenu()"> </i> 
+    <div >
+      <ul class="nav-small">
+    <li><img class="border-rounded logo " src="/images/bdoctors1.jpg" alt=""></li>
+     <li><i class="fa-solid fa-bars" @click="showMenu()"> </i></li>
+  </ul>
+  </div> 
+   
+      
+   
+    
 <!--menu content-->
     <div class="nav-content" :class="this.showMobileMenu ? 'open-menu' : 'closed-menu'"> 
 <!--logo-->
-      <div class="logo">LOGO</div> 
+    <div class="border-rounded">
+        <img class="hidden " src="/images/bdoctors1.jpg" alt="">
+      </div>   
 
-        <ul class="nav-items">
+        <ul class="nav-items ">
           <li>Menu</li>
           <li>About</li>
           <li>Contact</li>
         </ul>
 
-        <div class="login-button">Login</div>
+        <button type="button" class="btn btn-light">Login</button>
     </div>
   </div>
 </header>
@@ -50,8 +61,14 @@ this.showMobileMenu = !this.showMobileMenu;
 </script>
 
 <style lang="scss" scoped>
+.logo{
+  display: none;
+}
+
 .nav-menu {
 background-color:#0077b6ff;
+color: white;
+
 }
 .nav-content {
 display: flex;
@@ -68,10 +85,27 @@ margin: 0;
 padding: 0;
 li {
 padding: 0 10px;
+cursor: pointer;
 }
 }
 i {
 display: none;
+}
+
+button {
+  color: white;
+  background-color: #0077b6ff;
+}
+
+.border-rounded{
+    border-radius: 50px;
+    overflow: hidden;
+}
+.nav-small{
+  display: none;
+}
+img {
+  width: 110px;
 }
 // Mobile version - hidden hamburger menu
 @media screen and (max-width: 768px) {
@@ -79,6 +113,7 @@ display: none;
 padding-top: 10px;
 position: absolute;
 width: 100%;
+z-index: 5000;
 }
 .open-menu {
 opacity: 1;
@@ -90,19 +125,37 @@ height: 0;
 padding: 0;
 }
 .nav-content {
-flex-direction: column;
-z-index: 100;
+z-index: 1000;
 position: relative;
 transition: all 0.2s ease-out;
 }
 .nav-items {
 flex-direction: column;
 }
+.hidden{
+  display: none;
+}
 i {
 display: block;
 text-align: right;
 padding: 0 10px 10px 0;
 }
+
+.logo{
+  display: block;
+  
+  text-align: left;
+
+}
+.nav-small{
+display: flex;
+justify-content: space-between;
+align-items: center;
+list-style: none;
+
+}
+
+
 }
 
 
