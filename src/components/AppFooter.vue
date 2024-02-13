@@ -20,7 +20,7 @@
               <div class="d-flex flex-column">
                 <ul>
                   <li
-                    v-for="specialty in specialties.slice(0, 10)"
+                    v-for="specialty in specialties.slice(0, 6)"
                     :key="specialty">
                     <a href="#">{{ specialty }}</a>
                   </li>
@@ -29,7 +29,7 @@
               <div class="d-flex flex-column">
                 <ul>
                   <li
-                    v-for="specialty in specialties.slice(10, 20)"
+                    v-for="specialty in specialties.slice(6, 12)"
                     :key="specialty">
                     <a href="#">{{ specialty }}</a>
                   </li>
@@ -38,7 +38,7 @@
               <div class="d-flex flex-column">
                 <ul>
                   <li
-                    v-for="specialty in specialties.slice(20, 30)"
+                    v-for="specialty in specialties.slice(12, 18)"
                     :key="specialty">
                     <a href="#">{{ specialty }}</a>
                   </li>

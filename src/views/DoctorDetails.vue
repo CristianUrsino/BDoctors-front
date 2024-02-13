@@ -9,7 +9,7 @@
                         </div>
                         <div class="doctor-info px-4">
                             <div class="d-flex align-items-center">
-                                <h2>Dr. Valerio Bartoletti</h2>
+                                <h2>Dr. Mario Rossi</h2>
                                 <i class="fa-solid fa-circle-check ms-2"></i>
                             </div>
                             <span class="speciaties">Cardiologo, Endocrinologo</span>
@@ -53,10 +53,11 @@
     padding:10px 10px
 }
 .single-doctor-section{
-    background-color: $blue-green;
+    background-color: white;
 }
 .single-doctor-card{
     border-radius:5px;
+    border:1px solid rgb(202, 202, 202);
     .doctor-img{
         width:160px;
         height:160px;
