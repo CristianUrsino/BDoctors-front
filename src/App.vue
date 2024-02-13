@@ -5,6 +5,7 @@
   <div>
     <router-view></router-view>
   </div>
+  
   <AppFooter />
 </template>
 
@@ -12,7 +13,9 @@
 import AppProva from './components/AppProva.vue';
 import AppFooter from './components/AppFooter.vue';
 import Home from './views/Home.vue';
-import AppNav from './components/AppNav.vue'
+import AppNav from './components/AppNav.vue';
+import DoctorDetails from './views/DoctorDetails.vue';
+
 export default{
         name:'App',
         data() {
@@ -25,6 +28,7 @@ export default{
           AppFooter,
           Home,
           AppNav,
+          DoctorDetails
         }
     }
 </script>
