@@ -24,9 +24,22 @@
                   Controlla le tue statistiche e le tue recensioni.
                 </p>
               </li>
+              <li class="d-flex gap-2">
+                <i class="fa-solid fa-share mt-2"></i>
+                <p class="">
+                  Proponi ai tuoi pazienti esami innovativi. 
+                </p>
+              </li>
+              
+              <li class="d-flex gap-2">
+                <i class="fa-solid fa-share mt-2"></i>
+                <p class="">
+                  Migliora la tua visibilità online. 
+                </p>
+              </li>
             </ul>
-            <div class="text-center pt-5">
-              <button class="btn btn-primary">Iscriviti</button>
+            <div class="mt-3">
+              <button class="btn btn-primary text-uppercase sub-btn">Iscriviti subito</button>
             </div>
           </div>
         </div>
@@ -46,6 +59,10 @@ export default {
 
 <style lang="scss" scoped>
 @import "@/assets/styles/partials/_variables.scss";
+.sub-btn{
+    font-weight: 600;
+    border-radius: 10px;
+}
 .call-action-img {
   width: 200px;
   height: 200px;
