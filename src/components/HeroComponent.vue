@@ -1,3 +1,4 @@
+HeroComponent
 <template>
     <div class="myhero-bg  pt-5">
         <div class="container my-margin">
@@ -22,7 +23,7 @@
                         bg-color="#FAFAFA"
                     ></v-autocomplete>
                     
-                    <v-btn icon="mdi-search" size="x-large"><i class="fa-solid fa-magnifying-glass"></i></v-btn>
+                    <v-btn icon="mdi-search" size="x-large"><i class="fa-solid fa-magnifying-glass" @click="redirectToLink"></i ></v-btn>
                     
                 </div>
                 <div class="w-50">
@@ -64,6 +65,13 @@ import { ref } from 'vue';
                 selectedCity,
                 cityoption,
             };
+        },
+        methods:{
+            redirectToLink() {
+        
+                this.$router.push({ name: 'DoctorSearch' });
+
+    }
         }
     }
 </script>
