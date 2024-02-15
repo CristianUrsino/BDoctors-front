@@ -1,23 +1,22 @@
 <template>
     <div class="container">
         <div class="d-flex mediaq">
-            <v-select
-                class="gap-2 mt-4 col-12 col-sm-6"
-                v-model="selectedProfession"
-                :items="professions"
-                label="Selezione Professione"
-                outlined
-            ></v-select>
-            <v-select
-                class=" gap-2 mt-4 col-12 col-sm-6"
-                v-model="selectedRating"
-                :items="ratings"
-                label="Seleziona voto"
-                outlined
-            ></v-select>
-            
-            <v-btn class="gap-2 align-self-center" @click="searchDoctor">Cerca</v-btn>
+        <div class="gap-2 mt-4 col-12 col-sm-6">
+            <label for="professionSelect">Selezione Professione:</label>
+            <select id="professionSelect" v-model="selectedProfession">
+                <option value="">Tutte le professioni</option>
+                <option v-for="profession in professions" :key="profession.id" :value="profession.id">{{ profession.name }}</option>
+            </select>
         </div>
+        <div class="gap-2 mt-4 col-12 col-sm-6">
+            <label for="ratingSelect">Seleziona voto:</label>
+            <select id="ratingSelect" v-model="selectedRating">
+                <option value="">Tutti i voti</option>
+                <option v-for="rating in ratings" :key="rating" :value="rating">{{ rating}}</option>
+            </select>
+        </div>
+        <button class="gap-2 align-self-center" @click="searchDoctor">Cerca</button>
+    </div>
         <div class="row">
             <div class="col-md-4 col-12  mb-5 mt-5" v-for="doctor in doctors" :key="doctor.id">
                 <v-card
@@ -88,28 +87,29 @@ export default {
             
             ratings: [1, 2, 3, 4, 5],
             professions: [],
-            cities: [], 
+            
         }
     },
     methods: {
         formatSpecialties(specialties) {
         return specialties.map(specialty => specialty.name).join(', ');
         },
+        fetchProfessions() {
+            axios.get(`${this.store.apiBaseUrl}/specialties`)
+                .then(response => {
+                    this.professions = response.data.results;
+                })
+                .catch(error => {
+                    console.error('Error fetching professions:', error);
+                });
+        },
         fetchDoctors() {
+
         axios.get(`${this.store.apiBaseUrl}/doctors`)
             .then(response => {
                 this.doctors = response.data.results;
                 
-                const specialties = this.doctors.reduce((acc, doctor) => {
-                        doctor.specialties.forEach(specialty => {
-                            if (!acc.includes(specialty.name)) {
-                                acc.push(specialty.name);
-                            }
-                        });
-                        return acc;
-                    }, []);
-                    this.professions = specialties;
-                    
+               
                 
             })
             .catch(error => {
@@ -123,15 +123,18 @@ export default {
             doctor.reveal = false;
         },
         searchDoctor() {
+            console.log(this.selectedProfession);
+            console.log(this.selectedRating);
             axios.get(`${this.store.apiBaseUrl}/doctors`, {
                 params: {
-                    profession: this.selectedProfession,
+                    specialty: this.selectedProfession,
                     rating: this.selectedRating
                 }
             })
             .then(response => {
                 this.doctors = response.data.results;
                 console.log(this.doctors);
+                
             })
             .catch(error => {
                 console.error('Error searching doctors:', error);
@@ -140,6 +143,7 @@ export default {
     },
     created() {
         this.fetchDoctors();
+        this.fetchProfessions()
 
         
     }
