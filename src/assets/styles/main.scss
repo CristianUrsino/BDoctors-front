@@ -17,8 +17,25 @@ a {
 
 .btn:hover {
     background-color: $contrast-color;
-    border-color: $federal-blue;
+    border-color: $green-color;
     color: white;
+}
+
+.btn-search {
+    background-color: $honolulu-blue;
+    color: white;
+}
+
+.btn-call {
+    background-color: $contrast-color;
+    border-color: $green-color;
+    color: white;
+}
+
+.btn-call:hover {
+    background-color: $light-cyan;
+    border-color: none;
+    color: black;
 }
 
 .green {
@@ -28,6 +45,8 @@ a {
 .nav-link:hover,
 .nav-link.active {
     color: $contrast-color;
+
+    border-bottom: 5px $contrast-color;
 }
 
 footer {
