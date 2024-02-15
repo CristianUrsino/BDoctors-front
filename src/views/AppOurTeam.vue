@@ -1,6 +1,6 @@
 <template>
-    <div class="container">
-        <h1 class="text-center mb-5">{{ title }}</h1>
+    <div class="container mb-5">
+        <h1 class="text-center mb-5 mt-5 text-uppercase">{{ title }}</h1>
         <div class="row g-4">
             <div class="col-12 col-md-6 col-lg-4" v-for="member in members">
                 <div class="card dnd-card flex-fill">
@@ -11,7 +11,7 @@
                     </div>
 
 
-                    <div class="card-body text-center">
+                    <div class="card-body text-center ">
                         <h5 class="card-title dnd-card-title">{{ member.name }}</h5>
                         <p class="card-text dnd-card-text">{{ member.description }}</p>
                         <div>
@@ -34,7 +34,7 @@ export default {
     name: 'AppOurTeam',
     data() {
         return {
-            title: 'Our Team',
+            title: 'Il nostro team',
             members: [
                 {
                     name: 'Chiara Pontello',
@@ -72,6 +72,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+@import "@/assets/styles/partials/_variables.scss";
 .img-container {
     width: 200px;
     height: 200px;
@@ -86,8 +87,9 @@ export default {
 }
 
 .dnd-card {
-    border: 2px solid #6b4226;
-    background-color: #fff8e6;
+    border: 2px solid $marian-blue;
+;
+    background-color: $honolulu-blue;
     transition: transform 0.2s;
 }
 
@@ -96,7 +98,7 @@ export default {
 }
 
 .dnd-card-title {
-    color: #6b4226;
+    color: black;
 }
 
 .dnd-card-text {

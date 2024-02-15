@@ -20,11 +20,11 @@
           <img class="hidden " src="/images/bdoctors1.jpg" alt="">
         </div>
 
-        <ul class="nav-items ">
+        <ul class="nav-items text-uppercase">
           <li><router-link class="nav-link" active-class="active" :to="{ name: 'Home' }">Home</router-link></li>
           <li><router-link class="nav-link" active-class="active" :to="{ name: 'DoctorSearch' }">Ricerca</router-link>
           </li>
-          <li><router-link class="nav-link" active-class="active" :to="{ name: 'ourTeam' }">Our Team</router-link></li>
+          <li><router-link class="nav-link" active-class="active" :to="{ name: 'ourTeam' }">Il Nostro team</router-link></li>
 
         </ul>
 
