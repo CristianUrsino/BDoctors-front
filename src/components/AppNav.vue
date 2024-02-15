@@ -1,97 +1,95 @@
 <template>
+  <header>
+    <!--container menu-->
+    <div class="nav-menu">
+      <!--click-->
 
-<header>
-  <!--container menu-->
-  <div class="nav-menu"> 
-  <!--click-->
-   
       <ul class="nav-small">
-    <li><img class="border-rounded logo " src="/images/bdoctors1.jpg" alt=""></li>
-     <li><i class="fa-solid fa-bars" @click="showMenu()"> </i></li>
-  </ul>
-  
-   
-      
-   
-    
-<!--menu content-->
-    <div class="nav-content" :class="this.showMobileMenu ? 'open-menu' : 'closed-menu'"> 
-<!--logo-->
-    <div class="border-rounded">
-        <img class="hidden " src="/images/bdoctors1.jpg" alt="">
-      </div>   
+        <li><img class="border-rounded logo " src="/images/bdoctors1.jpg" alt=""></li>
+        <li><i class="fa-solid fa-bars" @click="showMenu()"> </i></li>
+      </ul>
+
+
+
+
+
+      <!--menu content-->
+      <div class="nav-content" :class="this.showMobileMenu ? 'open-menu' : 'closed-menu'">
+        <!--logo-->
+        <div class="border-rounded">
+          <img class="hidden " src="/images/bdoctors1.jpg" alt="">
+        </div>
 
         <ul class="nav-items ">
-          <li>Menu</li>
-          <li>About</li>
-          <li>Contact</li>
-        
+          <li><router-link class="nav-link" active-class="active" :to="{ name: 'Home' }">Home</router-link></li>
+          <li><router-link class="nav-link" active-class="active" :to="{ name: 'DoctorSearch' }">Ricerca</router-link>
+          </li>
+          <li><router-link class="nav-link" active-class="active" :to="{ name: 'ourTeam' }">Our Team</router-link></li>
+
         </ul>
 
-        <button type="button" class="btn btn-light">Login</button>
+        <button type="button" class="btn btn-light"><a href="http://127.0.0.1:8000/login" target="_blank"
+            rel="noopener noreferrer">Login</a></button>
+      </div>
     </div>
-  </div>
-</header>
-
-
-
-
-
-
-    
+  </header>
 </template>
 
 <script>
 export default {
-    name: "AppNav",
-    data() {
-return {
-showMobileMenu: false,
+  name: "AppNav",
+  data() {
+    return {
+      showMobileMenu: false,
+    };
+  },
+  methods: {
+    showMenu() {
+      this.showMobileMenu = !this.showMobileMenu;
+    },
+  },
 };
-},
-methods: {
-showMenu() {
-this.showMobileMenu = !this.showMobileMenu;
-},
-},
-};
-    
-    
-    
-      
+
+
+
+
 </script>
 
 <style lang="scss" scoped>
-.logo{
+.logo {
   display: none;
 }
 
 .nav-menu {
-background-color:#0077b6ff;
-color: white;
+  background-color: #0077b6ff;
+  color: white;
 
 }
+
 .nav-content {
-display: flex;
-justify-content: space-between;
-padding: 10px 30px;
-align-items: center;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 30px;
+  align-items: center;
 }
+
 .nav-items {
-display: flex;
-justify-content: center;
-align-items: center;
-list-style: none;
-margin: 0;
-padding: 0;
-li {
-padding: 0 10px;
-cursor: pointer;
-font-size: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  li {
+    padding: 0 10px;
+    cursor: pointer;
+    font-size: 1.5rem;
+  }
 }
-}
+
 i {
-display: none;
+  display: none;
 }
 
 button {
@@ -100,66 +98,74 @@ button {
   font-size: 1.5rem;
 }
 
-.border-rounded{
-    border-radius: 25px;
-    overflow: hidden;
+.border-rounded {
+  border-radius: 25px;
+  overflow: hidden;
 }
-.nav-small{
+
+.nav-small {
   display: none;
 }
+
 img {
   width: 110px;
 }
+
 // Mobile version - hidden hamburger menu
 @media screen and (max-width: 768px) {
-.nav-menu {
-padding-top: 10px;
-position: absolute;
-width: 100%;
-z-index: 5000;
-}
-.open-menu {
-opacity: 1;
-//height: 150px;
-}
-.closed-menu {
-opacity: 0;
-height: 0;
-padding: 0;
-}
-.nav-content {
-z-index: 1000;
-position: relative;
-transition: all 0.2s ease-out;
-}
-.nav-items {
-flex-direction: column;
-}
-.hidden{
-  display: none;
-}
-i {
-display: block;
-text-align: right;
-padding: 0 10px 10px 0;
-}
+  .nav-menu {
+    padding-top: 10px;
+    position: absolute;
+    width: 100%;
+    z-index: 5000;
+  }
 
-.logo{
-  display: block;
-  
-  text-align: left;
+  .open-menu {
+    opacity: 1;
+    //height: 150px;
+  }
+
+  .closed-menu {
+    opacity: 0;
+    height: 0;
+    padding: 0;
+  }
+
+  .nav-content {
+    z-index: 1000;
+    position: relative;
+    transition: all 0.2s ease-out;
+  }
+
+  .nav-items {
+    flex-direction: column;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  i {
+    display: block;
+    text-align: right;
+    padding: 0 10px 10px 0;
+  }
+
+  .logo {
+    display: block;
+
+    text-align: left;
+
+  }
+
+  .nav-small {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    list-style: none;
+
+  }
+
 
 }
-.nav-small{
-display: flex;
-justify-content: space-between;
-align-items: center;
-list-style: none;
-
-}
-
-
-}
-
-
 </style>
