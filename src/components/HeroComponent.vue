@@ -1,38 +1,21 @@
-HeroComponent
 <template>
-    <div class="myhero-bg  pt-5">
+    <div class="myhero-bg pt-5">
         <div class="container my-margin">
             <h1 class="text-white">Prenota la tua visita online</h1>
             <div class="d-flex flex-wrap justify-content-between align-items-center">
                 <div class="w-50">
-                    <v-autocomplete
-                        v-model="selectedProfession"
-                        :items="options"
-                        label="Cosa Cerchi?"
-                        placeholder="Seleziona o inserisci una professione"
-                        
-                        bg-color="#FAFAFA"
-                        base-color="#FAFAFA"
-                    ></v-autocomplete> 
-                    <v-autocomplete
-                        v-model="selectedCity"
-                        :items="cityoption"
-                        label="Città"
-                        placeholder="Inserisci la città"
-                        
-                        bg-color="#FAFAFA"
-                    ></v-autocomplete>
-                    
-                    <v-btn icon="mdi-search" size="x-large"><i class="fa-solid fa-magnifying-glass" @click="redirectToLink"></i ></v-btn>
-                    
+                    <select v-model="selectedProfession" @change="fetchProfessions" class="form-select mb-4" aria-label="Profession Select">
+                        <option disabled value="">Cosa Cerchi?</option>
+                        <option v-for="profession in professions" :key="profession.id" :value="profession.id">{{ profession.name }}</option>
+                    </select>
+                    <select v-model="selectedCity" class="form-select mb-4" aria-label="City Select">
+                        <option value="Lombardia" selected>Lombardia</option>
+                    </select>
+                    <v-btn icon="mdi-search" size="x-large"><i class="fa-solid fa-magnifying-glass" @click="redirectToLink(selectedProfession, selectedCity)"></i></v-btn>
                 </div>
                 <div class="w-50">
                     <v-carousel cycle hide-delimiters :show-arrows="false" interval="4000">
-                        <v-carousel-item
-                            v-for="(item, index) in carouselItems"
-                            :key="index"
-                            :src="item.src"
-                        ></v-carousel-item>
+                        <v-carousel-item v-for="(item, index) in carouselItems" :key="index" :src="item.src"></v-carousel-item>
                     </v-carousel>
                 </div>
             </div>
@@ -41,46 +24,54 @@ HeroComponent
 </template>
 
 <script>
-import { ref } from 'vue';
-    export default {
-        name: 'HeroComponent',
-        data() {
-            return{
-                carouselItems: [
-                    { src: '/public/images/dottore1.png' },
-                    { src: '/public/images/dottore2.png' },
-                    { src: '/public/images/dottore3.png' }
-                ]
-            }
+import axios from 'axios';
+import { store } from '../store';
+export default {
+    name: 'HeroComponent',
+    data() {
+        return {
+            selectedProfession: '', 
+            selectedCity: 'Lombardia',
+            carouselItems: [
+                { src: '/images/dottore1.png' },
+                { src: '/images/dottore2.png' },
+                { src: '/images/dottore3.png' }
+            ],
+            professions: [],
+            
+        };
+    },
+    methods: {
+        redirectToLink() {
+            this.$router.push({ name: 'DoctorSearch', query: { profession: this.selectedProfession,} });
         },
-        setup() {
-            const selectedProfession = ref(null);
-            const options = ['Psicologo', 'Lezzologo']; 
-            const selectedCity = ref(null);
-            const cityoption = ['Roma','Milano']
-
-            return {
-                selectedProfession,
-                options,
-                selectedCity,
-                cityoption,
-            };
+        fetchProfessions() {
+            axios.get(`${this.store.apiBaseUrl}/specialties`)
+                .then(response => {
+                    this.professions = response.data.results;
+                })
+                .catch(error => {
+                    console.error('Error fetching professions:', error);
+                });
         },
-        methods:{
-            redirectToLink() {
         
-                this.$router.push({ name: 'DoctorSearch' });
-
-    }
+    },
+    created() {
+        this.fetchProfessions();
+    },
+    computed: {
+        store() {
+            return store;
         }
     }
+};
 </script>
 
 <style lang="scss" scoped>
-.myhero-bg{
-    background-color:#0077b6ff;
+.myhero-bg {
+    background-color: #0077b6ff;
 }
-.my-margin{
+.my-margin {
     margin-top: 80px;
 }
 </style>

@@ -1,22 +1,22 @@
 <template>
     <div class="container">
         <div class="d-flex mediaq">
-        <div class="gap-2 mt-4 col-12 col-sm-6">
-            <label for="professionSelect">Selezione Professione:</label>
-            <select id="professionSelect" v-model="selectedProfession">
-                <option value="">Tutte le professioni</option>
-                <option v-for="profession in professions" :key="profession.id" :value="profession.id">{{ profession.name }}</option>
-            </select>
+            <div class="gap-2 mt-4 col-12 col-sm-6">
+                <label for="professionSelect">Selezione Professione:</label>
+                <select id="professionSelect" v-model="selectedProfession">
+                    <option value="">Tutte le professioni</option>
+                    <option v-for="profession in professions" :key="profession.id" :value="profession.id">{{ profession.name }}</option>
+                </select>
+            </div>
+            <div class="gap-2 mt-4 col-12 col-sm-6">
+                <label for="ratingSelect">Seleziona voto:</label>
+                <select id="ratingSelect" v-model="selectedRating">
+                    <option value="">Tutti i voti</option>
+                    <option v-for="rating in ratings" :key="rating" :value="rating">{{ rating}}</option>
+                </select>
+            </div>
+            <button class="gap-2 align-self-center" @click="searchDoctor">Cerca</button>
         </div>
-        <div class="gap-2 mt-4 col-12 col-sm-6">
-            <label for="ratingSelect">Seleziona voto:</label>
-            <select id="ratingSelect" v-model="selectedRating">
-                <option value="">Tutti i voti</option>
-                <option v-for="rating in ratings" :key="rating" :value="rating">{{ rating}}</option>
-            </select>
-        </div>
-        <button class="gap-2 align-self-center" @click="searchDoctor">Cerca</button>
-    </div>
         <div class="row">
             <div class="col-md-4 col-12  mb-5 mt-5" v-for="doctor in doctors" :key="doctor.id">
                 <v-card
@@ -142,9 +142,12 @@ export default {
         }
     },
     created() {
+        const params = new URLSearchParams(window.location.search);
+        this.selectedProfession = params.get('profession') || '';
+        this.selectedCity = params.get('city') || 'Lombardia';
         this.fetchDoctors();
-        this.fetchProfessions()
-
+        this.fetchProfessions();
+        this.searchDoctor();
         
     }
 }
