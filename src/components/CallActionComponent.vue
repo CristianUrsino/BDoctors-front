@@ -8,7 +8,7 @@
               <img src="/images/bdoctors1.jpg" alt="" />
             </div>
           </div>
-          <div class="col-12 call-action-text text-white my-4">
+          <div class="col-12 col-md-8 call-action-text text-white my-4">
             <h1 class="">Sei un medico? Registrati!</h1>
             <ul>
               <li class="d-flex gap-2">
@@ -39,7 +39,7 @@
               </li>
             </ul>
             <div class="mt-3">
-              <button class="btn btn-primary text-uppercase sub-btn">
+              <button class="btn btn-call text-uppercase sub-btn">
                 <a href="http://127.0.0.1:8000/register">Iscriviti subito</a>
               </button>
             </div>

@@ -26,6 +26,18 @@ a {
     color: white;
 }
 
+.btn-call {
+    background-color: $contrast-color;
+    border-color: $green-color;
+    color: white;
+}
+
+.btn-call:hover {
+    background-color: $light-cyan;
+    border-color: none;
+    color: black;
+}
+
 .green {
     color: $green-color;
 }
