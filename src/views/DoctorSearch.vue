@@ -1,6 +1,7 @@
 <template>
     <div class="container">
-        <div class="d-flex gap-2 mediaq">
+        <h1 class="my-4">Cerca il tuo specialista</h1>
+        <div class="d-flex flex-wrap align-items-end gap-2 mediaq mb-4">
             <div class=" mt-4 col-12 col-md-6 col-lg-4">
                 <label for="professionSelect">Selezione Professione:</label>
                 <select class="form-select " id="professionSelect" v-model="selectedProfession">
@@ -17,12 +18,12 @@
                 </select>
             </div>
             <div>
-                <button class="gap-2" @click="searchDoctor">Cerca</button>
+                <button class="btn btn-search" @click="searchDoctor">Cerca</button>
             </div>
 
 
         </div>
-        <div class="row">
+        <div class="row mb-5">
             <div class="col-md-4 col-12  mb-5 mt-5" v-for="doctor in doctors" :key="doctor.id">
                 <v-card class="mx-auto" max-width="344" :title="doctor.user.name + ' ' + doctor.user.last_name"
                     :subtitle="formatSpecialties(doctor.specialties)" hover link>
@@ -96,6 +97,21 @@ export default {
             axios.get(`${this.store.apiBaseUrl}/doctors`)
                 .then(response => {
                     this.doctors = response.data.results;
+                    let namesArray = [];
+                    const specialties = this.doctors.reduce((acc, doctor) => {
+                        //console.log(acc);
+
+                        doctor.specialties.forEach(specialty => {
+                            console.log(specialty);
+                            if (!namesArray.includes(specialty.name)) {
+                                namesArray.push(specialty.name);
+                                acc.push(specialty);
+                            }
+                        });
+                        //console.log(namesArray);
+                        return acc;
+                    }, []);
+                    this.professions = specialties;
 
 
 
@@ -134,7 +150,7 @@ export default {
         this.selectedProfession = params.get('profession') || '';
         this.selectedCity = params.get('city') || 'Lombardia';
         this.fetchDoctors();
-        this.fetchProfessions();
+        // this.fetchProfessions();
         this.searchDoctor();
     }
 }
