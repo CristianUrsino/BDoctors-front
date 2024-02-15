@@ -1,31 +1,25 @@
 <template>
     <div class="container">
-        <div class="d-flex">
+        <div class="d-flex mediaq">
             <v-select
-                class="gap-2 mt-4"
+                class="gap-2 mt-4 col-12 col-sm-6"
                 v-model="selectedProfession"
                 :items="professions"
                 label="Selezione Professione"
                 outlined
             ></v-select>
             <v-select
-                class=" gap-2 mt-4"
+                class=" gap-2 mt-4 col-12 col-sm-6"
                 v-model="selectedRating"
                 :items="ratings"
                 label="Seleziona voto"
                 outlined
             ></v-select>
-            <v-select
-                class=" gap-2 mt-4"
-                v-model="selectedCity"
-                :items="cities"
-                label="Seleziona Città"
-                outlined
-            ></v-select>
             
+            <v-btn class="gap-2 align-self-center" @click="searchDoctor">Cerca</v-btn>
         </div>
         <div class="row">
-            <div class="col-4 mb-5 mt-5" v-for="doctor in doctors" :key="doctor.id">
+            <div class="col-md-4 col-12  mb-5 mt-5" v-for="doctor in doctors" :key="doctor.id">
                 <v-card
                     class="mx-auto"
                     max-width="344"
@@ -91,7 +85,7 @@ export default {
             doctors: [],
             selectedProfession: '',
             selectedRating: '',
-            selectedCity: '',
+            
             ratings: [1, 2, 3, 4, 5],
             professions: [],
             cities: [], 
@@ -105,7 +99,17 @@ export default {
         axios.get(`${this.store.apiBaseUrl}/doctors`)
             .then(response => {
                 this.doctors = response.data.results;
-                console.log(this.doctors);
+                
+                const specialties = this.doctors.reduce((acc, doctor) => {
+                        doctor.specialties.forEach(specialty => {
+                            if (!acc.includes(specialty.name)) {
+                                acc.push(specialty.name);
+                            }
+                        });
+                        return acc;
+                    }, []);
+                    this.professions = specialties;
+                    
                 
             })
             .catch(error => {
@@ -118,7 +122,21 @@ export default {
         hideReveal(doctor) {
             doctor.reveal = false;
         },
-        
+        searchDoctor() {
+            axios.get(`${this.store.apiBaseUrl}/doctors`, {
+                params: {
+                    profession: this.selectedProfession,
+                    rating: this.selectedRating
+                }
+            })
+            .then(response => {
+                this.doctors = response.data.results;
+                console.log(this.doctors);
+            })
+            .catch(error => {
+                console.error('Error searching doctors:', error);
+            });
+        }
     },
     created() {
         this.fetchDoctors();
@@ -137,5 +155,13 @@ img {
     opacity: 1 !important;
     position: absolute;
     width: 100%;
+}
+@media screen and (max-width: 768px) {
+  .container {
+    padding-top: 180px; 
+  }
+  .mediaq {
+    display: block !important;
+  }
 }
 </style>
