@@ -39,7 +39,9 @@
               </li>
             </ul>
             <div class="mt-3">
-              <button class="btn btn-primary text-uppercase sub-btn">Iscriviti subito</button>
+              <button class="btn btn-primary text-uppercase sub-btn">
+                <a href="http://127.0.0.1:8000/register">Iscriviti subito</a>
+              </button>
             </div>
           </div>
         </div>
@@ -59,6 +61,10 @@ export default {
 
 <style lang="scss" scoped>
 @import "@/assets/styles/partials/_variables.scss";
+a{
+    color:white;
+    text-decoration:none;
+}
 .sub-btn{
     font-weight: 600;
     border-radius: 10px;
