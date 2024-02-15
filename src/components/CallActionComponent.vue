@@ -40,7 +40,7 @@
             </ul>
             <div class="mt-3">
               <button class="btn btn-call text-uppercase sub-btn">
-                <a href="http://127.0.0.1:8000/register">Iscriviti subito</a>
+                <a href="http://127.0.0.1:8000/register" target="_blank">Iscriviti subito</a>
               </button>
             </div>
           </div>
