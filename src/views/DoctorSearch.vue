@@ -1,5 +1,5 @@
 <template>
-    <div class="container py-5">
+    <div class="container">
         <h1 class="my-4">Cerca il tuo specialista</h1>
         <div class="d-flex flex-wrap align-items-end gap-2 mediaq mb-4">
             <div class=" mt-4 col-12 col-md-6 col-lg-4">
