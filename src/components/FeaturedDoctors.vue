@@ -4,7 +4,7 @@
       <h1 class="text-center text-white py-5">Medici in evidenza</h1>
       <div class="row my-5 pt-5">
         <div class="col-4" v-for="doctor in sponsoredDoctors" :key="doctor.id">
-          <DoctorCards :name="doctor.name" :surname="doctor.last_name" :specialty="doctor.specialties[0]" :image="image ? store.imagesBaseUrl+doctor.image : '/images/avatar_doctor.jpg'" :address="doctor.address"/>
+          <DoctorCards :name="doctor.user.name" :surname="doctor.user.last_name" :specialty="doctor.specialties[0].name" :image="image ? store.imagesBaseUrl+doctor.image : '/images/avatar_doctor.jpg'" :address="doctor.address"/>
         </div>
       </div>
     </div>
