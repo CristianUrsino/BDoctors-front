@@ -2,7 +2,7 @@
   <div class="mybg py-5">
     <div class="container">
       <h1 class="text-center text-white py-5">Medici in evidenza</h1>
-      <div class="row my-5 pt-5">
+      <div class="row gy-5 justify-content-center my-5 pt-5">
         <div class="col-12 col-md-6 col-lg-4 col-xl-3" v-for="doctor in sponsoredDoctors" :key="doctor.id">
           <DoctorCards :name="doctor.user.name" :surname="doctor.user.last_name" :specialty="doctor.specialties[0].name"
             :image="image ? store.imagesBaseUrl + doctor.image : '/images/avatar_doctor.jpg'" :address="doctor.address" />
