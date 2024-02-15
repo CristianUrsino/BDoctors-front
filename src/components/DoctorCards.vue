@@ -1,14 +1,17 @@
 <template>
     <div class="bg-white mt-5 hover-effect">
         <div class="roundup">
-            <img src="https://picsum.photos/id/237/200/300" alt="" class="w-100">
+            <img :src="image" :alt="name + ' ' + surname" class="w-100">
         </div>
         <div class="my-card-adjust">
             
-            <h5 class="fs-6 text-center">D. Canem Canus</h5>
-            <p class="text-gray text-center ">GINECOLOGO PROFESSIONALE</p>
-            <div class="text-center">
-                <span class="text-center">Quando lo chiami ti da la zampa</span>
+            <div class="d-flex align-items-center justify-content-center align-items-center mb-1">
+                <h5 class="fs-6">Dr. {{name}} {{surname}}</h5>
+                <i class="fa-solid fa-circle-check ms-2"></i>
+            </div>
+            <p class="text-gray text-center text-uppercase">{{specialty}}</p>
+            <div class="text-center mt-1">
+                <span class="text-center">{{address}}</span>
             </div>
             
         </div>
@@ -21,15 +24,29 @@
 <script>
     export default {
         name:'DoctorCards',
+        props:[
+            "name",
+            "surname",
+            "specialty",
+            "image",
+            "address",
+        ],
         data(){
             return{
-                
+               
             }
-        }
+        },
     }
 </script>
 
 <style lang="scss" scoped>
+@import "@/assets/styles/partials/_variables.scss";
+h5{
+    margin:0
+}
+.fa-solid.fa-circle-check{
+            color:$honolulu-blue
+        }
 .bg-white{
     
     position: relative;
