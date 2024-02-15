@@ -10,17 +10,36 @@ $fa-font-path: '../webfonts';
 
 @import 'bootstrap/scss/bootstrap';
 
-.green{
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.btn:hover {
+    background-color: $contrast-color;
+    border-color: $federal-blue;
+    color: white;
+}
+
+.green {
     color: $green-color;
 }
-footer{
+
+.nav-link:hover,
+.nav-link.active {
+    color: $contrast-color;
+}
+
+footer {
     background-color: $marian-blue;
-    color:white;
-    h3{
-        color:$pacific-cyan
+    color: white;
+
+    h3 {
+        color: $pacific-cyan
     }
-    .logo-text{
-        color:$pacific-cyan;
+
+    .logo-text {
+        color: $pacific-cyan;
         font-weight: 700;
     }
 }
