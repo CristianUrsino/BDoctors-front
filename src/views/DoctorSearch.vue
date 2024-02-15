@@ -20,6 +20,7 @@
                 <button class="gap-2" @click="searchDoctor">Cerca</button>
             </div>
 
+
         </div>
         <div class="row">
             <div class="col-md-4 col-12  mb-5 mt-5" v-for="doctor in doctors" :key="doctor.id">
@@ -129,10 +130,12 @@ export default {
         }
     },
     created() {
+        const params = new URLSearchParams(window.location.search);
+        this.selectedProfession = params.get('profession') || '';
+        this.selectedCity = params.get('city') || 'Lombardia';
         this.fetchDoctors();
-        this.fetchProfessions()
-
-
+        this.fetchProfessions();
+        this.searchDoctor();
     }
 }
 </script>
