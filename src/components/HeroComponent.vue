@@ -11,7 +11,7 @@
                     <select v-model="selectedCity" class="form-select mb-4" aria-label="City Select">
                         <option value="Lombardia" selected>Lombardia</option>
                     </select>
-                    <v-btn icon="mdi-search" size="x-large"><i class="fa-solid fa-magnifying-glass" @click="redirectToLink(selectedProfession, selectedCity)"></i></v-btn>
+                    <button @click="redirectToLink(selectedProfession)" class="btn btn-light">Cerca</button>
                 </div>
                 <div class="w-50">
                     <v-carousel cycle hide-delimiters :show-arrows="false" interval="4000">
