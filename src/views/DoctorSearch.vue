@@ -8,13 +8,14 @@
                     <option v-for="profession in professions" :key="profession.id" :value="profession.id">{{ profession.name }}</option>
                 </select>
             </div>
-            <div class="gap-2 mt-4 col-12 col-sm-6">
+            <!-- <div class="gap-2 mt-4 col-12 col-sm-6">
                 <label for="ratingSelect">Seleziona voto:</label>
                 <select id="ratingSelect" v-model="selectedRating">
                     <option value="">Tutti i voti</option>
                     <option v-for="rating in ratings" :key="rating" :value="rating">{{ rating}}</option>
                 </select>
-            </div>
+            </div> -->
+            <input type="text" v-model="searchName" placeholder="Cerca per nome">
             <button class="gap-2 align-self-center" @click="searchDoctor">Cerca</button>
         </div>
         <div class="row">
@@ -128,7 +129,8 @@ export default {
             axios.get(`${this.store.apiBaseUrl}/doctors`, {
                 params: {
                     specialty: this.selectedProfession,
-                    rating: this.selectedRating
+                    rating: this.selectedRating,
+                    name: this.searchName
                 }
             })
             .then(response => {
