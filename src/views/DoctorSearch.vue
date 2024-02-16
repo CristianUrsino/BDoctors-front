@@ -10,14 +10,15 @@
                     }}</option>
                 </select>
             </div>
-            <div class="mt-4 col-12 col-md-6 col-lg-4">
+            <!-- <div class="mt-4 col-12 col-md-6 col-lg-4">
                 <label for="ratingSelect">Seleziona voto:</label>
                 <select class="form-select" id="ratingSelect" v-model="selectedRating">
                     <option value="">Tutti i voti</option>
                     <option v-for="rating in ratings" :key="rating" :value="rating">{{ rating }}</option>
                 </select>
-            </div>
+            </div> -->
             <div>
+                <input type="text" v-model="searchName" placeholder="Cerca per nome">
                 <button class="btn btn-search" @click="searchDoctor">Cerca</button>
             </div>
 
