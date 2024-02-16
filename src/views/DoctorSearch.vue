@@ -10,13 +10,13 @@
                     }}</option>
                 </select>
             </div>
-            <!-- <div class="mt-4 col-12 col-md-6 col-lg-4">
+            <div class="mt-4 col-12 col-md-6 col-lg-4">
                 <label for="ratingSelect">Seleziona voto:</label>
                 <select class="form-select" id="ratingSelect" v-model="selectedRating">
                     <option value="">Tutti i voti</option>
                     <option v-for="rating in ratings" :key="rating" :value="rating">{{ rating }}</option>
                 </select>
-            </div> -->
+            </div>
             <div>
                 <input type="text" v-model="searchName" placeholder="Cerca per nome">
                 <button class="btn btn-search" @click="searchDoctor">Cerca</button>
@@ -32,7 +32,8 @@
                         <img :src="doctor.image ? store.imagesBaseUrl + doctor.image : '/images/avatar_doctor.jpg'"
                             alt="Avatar">
                     </v-avatar>
-                    <v-card-text>{{ doctor.address }}</v-card-text>
+                    <v-card-text>{{ doctor.address }} <br> Voto Medio: {{ calculateRating(doctor) }}</v-card-text>
+
                     <v-card-actions>
                         <v-btn variant="text" color="teal-accent-4" @click="revealDoctor(doctor)">
                             Contatti
@@ -121,6 +122,21 @@ export default {
                     console.error('Error fetching doctors:', error);
                 });
         },
+        calculateRating(doctor) {
+            
+            if (doctor.votes.length === 0) {
+                return 'N/A'; 
+            }
+
+           
+            let total = 0;
+            doctor.votes.forEach(vote => {
+                total += vote.value;
+            });
+            const average = total / doctor.votes.length;
+
+            return average.toFixed(1); 
+        },
         revealDoctor(doctor) {
             doctor.reveal = true;
         },
@@ -133,7 +149,7 @@ export default {
             axios.get(`${this.store.apiBaseUrl}/doctors`, {
                 params: {
                     specialty: this.selectedProfession,
-                    rating: this.selectedRating,
+                    min_vote_average: this.selectedRating,
                     name: this.searchName
                 }
             })
