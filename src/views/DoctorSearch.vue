@@ -50,8 +50,11 @@
                                 <span>{{ doctor.tel }}</span>
                             </v-card-text>
                             <v-card-actions class="pt-0">
+                                <router-link class="btn detail-btn text-uppercase pt-2"
+                                :to="{ name: 'DoctorDetail', params: {slug: doctor.slug} }"> Mostra dettagli
+                                </router-link>
                                 <v-btn variant="text" color="teal-accent-4" @click="hideReveal(doctor)">
-                                    Close
+                                    Chiudi
                                 </v-btn>
                             </v-card-actions>
                         </v-card>
@@ -185,7 +188,15 @@ img {
     position: absolute;
     width: 100%;
 }
-
+.detail-btn{
+    color:#00bfa5;
+    font-weight: 500;
+    font-size: 0.9em;
+}
+.detail-btn:hover{
+    background-color:rgb(245, 255, 249);
+    border:1px solid white
+}
 @media screen and (max-width: 768px) {
     .container {
         padding-top: 180px;
