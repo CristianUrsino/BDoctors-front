@@ -83,6 +83,13 @@
             <h4 class="alert-heading">Il tuo messaggio è stato inviato con successo!</h4>
             <i class="fa-solid fa-xmark" @click="this.feedback = false"></i>
         </div>
+        <div v-if="this.success_vote_input"
+            class="alert alert-primary text-center" 
+            role="alert"
+        >
+            <h4 class="alert-heading">Il tuo voto è stato inviato con successo!</h4>
+            <i class="fa-solid fa-xmark" @click="this.success_vote_input = false"></i>
+        </div>
         
         <div class="col-12">
           <div class="single-doctor-card bg-white p-4 d-flex">
@@ -131,14 +138,19 @@
                 <i class="fa-solid fa-pen-to-square"></i>
                 <span class="ms-2">Lascia una recensione</span>
               </button>
-                            <select v-model="vote_input" id="vote" class="form-select my-4" name="vote">
-                                <option value="" selected>Seleziona voto</option>
-                                <option v-for="n in 5" :key="n" :value="n">{{ n }}</option>
-                            </select>
-                            <button type="button" class="btn btn-light center" @click="sendVote">
-                                <i class="fa-solid fa-star text-dark h6"></i>
-                                <span class="ms-2">Invia voto</span>
-                            </button>
+
+              <div class="mt-4 d-flex vote-section align-baseline">
+                <select v-model="vote_input" id="vote" class="form-select " name="vote">
+                    <option value="" selected>Seleziona voto</option>
+                    <option v-for="n in 5" :key="n" :value="n">{{ n }}</option>
+                </select>
+                <button type="button" class="btn btn-light" @click="sendVote">
+                    <i class="fa-solid fa-star h6"></i>
+                    <span class="ms-2">Invia voto</span>
+                </button>
+            </div>
+                <div v-if="error_vote_input" class="text-danger">errore nell'invio del voto</div>
+
             </div>
           </div>
         </div>
@@ -164,6 +176,8 @@ export default {
       email: "",
       feedback:false,
       vote_input: '',
+      error_vote_input: false,
+      success_vote_input: false,
     };
   },
   methods: {
@@ -228,13 +242,27 @@ export default {
 
         sendVote(){
             // console.log(this.vote_input);
+            if(this.vote_input === '' || this.vote_input === null || this.vote_input > 5){
+                this.error_vote_input = true;
+                return
+            }
+            this.success_vote_input = false;
+            this.error_vote_input = false;
             const formData = {
                 'profile_id': this.doctor.user.id,
                 'vote_id': this.vote_input
             }
             axios.post(this.store.apiBaseUrl+'/votes/store',formData).then((response)=>{
+                if(response.data.success){
+                    this.success_vote_input = true;
+                    this.getDoctorData();
+                }
+                else this.error_vote_input = true
                 console.log(response.data);
+                // console.log("successo: "+this.success_vote_input);
+                // console.log("fail:" + this.error_vote_input);
             })
+            
         }
   },
   created() {
@@ -247,11 +275,6 @@ export default {
 <style lang="scss" scoped>
 @import "@/assets/styles/partials/_variables.scss";
 
-.center{
-    position:relative;
-    left:50%;
-    transform:translateX(-50%);
-}
 .alert-primary{
     .fa-solid.fa-xmark{
         position:absolute;
@@ -358,6 +381,28 @@ h4 {
     .doctor-votes:hover {
       cursor: pointer;
       color: rgb(80, 78, 78);
+    }
+
+    .vote-section{
+        select{
+            width: 47%;
+            margin-right: 10px
+        }
+        button{
+            width: 50%;
+            height: 40px;
+            .fa-star{
+                color:black;
+            }
+        }
+        button:hover{
+            cursor: pointer;
+            color: white;
+            .fa-star{
+                color:white;
+            }
+            border: none;
+        }
     }
   }
 }
