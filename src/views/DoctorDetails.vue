@@ -3,12 +3,7 @@
     <!-- Drawer -->
     <v-card>
       <v-layout>
-        <v-navigation-drawer
-          v-model="drawer"
-          location="right"
-          width="600"
-          temporary
-        >
+        <v-navigation-drawer v-model="drawer" location="right" width="600" temporary>
           <div class="d-flex align-items-center drawer-header">
             <h4 class="py-3 ps-2">
               Dr. {{ doctor.user.name }} {{ doctor.user.last_name }}
@@ -16,56 +11,32 @@
             <i class="fa-solid fa-xmark" @click="drawer = false"></i>
           </div>
           <form @submit.prevent="submitForm" class="mt-2 ms-1">
-            <input
-              id="name"
-              v-model="name"
-              type="text"
-              name="name"
-              class="mb-3 form-control"
-              placeholder="Nome"
-              maxlength="255"
-              required
-            />
-            <input
-              id="surname"
-              v-model="surname"
-              type="text"
-              name="surname"
-              class="mb-3 form-control"
-              placeholder="Cognome"
-              maxlength="255"
-              required
-            />
-            <input
-              id="email"
-              v-model="email"
-              type="email"
-              name="email"
-              class="mb-3 form-control"
-              placeholder="Email"
-              maxlength="255"
-              required
-            />
-            <input
-              id="telephone"
-              v-model="telephone"
-              type="number"
-              name="telephone"
-              class="mb-3 form-control"
-              placeholder="Tel."
-              maxlength="13"
-            />
-            <textarea
-              class="mt-3 px-2 py-1"
-              name="message"
-              id="message"
-              cols="75"
-              rows="10"
-              placeholder="Invia il tuo messaggio..."
-              v-model="message"
-            ></textarea>
+            <div class="mb-3 form-control">
+              <input id="name" v-model="name" type="text" name="name" placeholder="Nome" maxlength="255"
+                @blur="errorsDetector('name')" />
+            </div>
+
+            <div class="mb-3 form-control">
+              <input id="surname" v-model="surname" type="text" name="surname" placeholder="Cognome" maxlength="255"
+                @blur="errorsDetector('surname')" />
+            </div>
+
+            <div class="mb-3 form-control">
+              <input id="email" v-model="email" type="email" name="email" placeholder="Email" maxlength="255"
+                @blur="errorsDetector('email')" />
+            </div>
+
+            <div class="mb-3 form-control">
+              <input id="telephone" v-model="telephone" type="text" name="telephone" placeholder="Tel." maxlength="13"
+                @blur="errorsDetector('telephone')" />
+            </div>
+
+            <div class="mb-3 form-control">
+              <textarea class="px-2 py-1" name="message" id="message" cols="75" rows="10"
+                placeholder="Invia il tuo messaggio..." v-model="message" @blur="errorsDetector('message')"></textarea>
+            </div>
             <div class="d-flex gap-2 ms-2 mt-3">
-              <button class="btn btn-light send-message px-5" type="submit">
+              <button id="send-message" class="btn btn-light send-message px-5" type="submit">
                 Invia
               </button>
               <button class="btn btn-warning px-5" type="reset">Resetta</button>
@@ -76,25 +47,18 @@
     </v-card>
     <div class="container">
       <div class="row">
-        <div v-if="this.feedback"
-            class="alert alert-primary text-center" 
-            role="alert"
-        >
-            <h4 class="alert-heading">Il tuo messaggio è stato inviato con successo!</h4>
-            <i class="fa-solid fa-xmark" @click="this.feedback = false"></i>
+        <div v-if="this.feedback" class="alert alert-primary text-center" role="alert">
+          <h4 class="alert-heading">Il tuo messaggio è stato inviato con successo!</h4>
+          <i class="fa-solid fa-xmark" @click="this.feedback = false"></i>
         </div>
-        
+
         <div class="col-12">
           <div class="single-doctor-card bg-white p-4 d-flex">
             <div class="doctor-img">
-              <img
-                :src="
-                  doctor.image
-                    ? store.imagesBaseUrl + doctor.image
-                    : '/images/avatar_doctor.jpg'
-                "
-                :alt="doctor.user.last_name"
-              />
+              <img :src="doctor.image
+                ? store.imagesBaseUrl + doctor.image
+                : '/images/avatar_doctor.jpg'
+                " :alt="doctor.user.last_name" />
             </div>
             <div class="doctor-info px-4">
               <div class="d-flex align-items-center">
@@ -105,40 +69,29 @@
               <div class="doctor-rating d-flex mt-2">
                 <div>
                   <!-- <i class="fa-solid fa-star" v-for="n in 5"></i> -->
-                  <i
-                    v-for="n in 5"
-                    :key="n"
-                    class="fa-star"
-                    :class="
-                      n <= calculateRating(doctor) ? 'fa-solid' : 'fa-regular'
-                    "
-                  ></i>
+                  <i v-for="n in 5" :key="n" class="fa-star" :class="n <= calculateRating(doctor) ? 'fa-solid' : 'fa-regular'
+                    "></i>
                 </div>
                 <span class="doctor-votes ms-2">
                   <u>{{ doctor.votes.length }} voti</u>
                 </span>
               </div>
-              <button
-                type="button"
-                class="btn btn-light send-message mt-5 me-3"
-              >
+              <button type="button" class="btn btn-light send-message mt-5 me-3">
                 <i class="fa-regular fa-comment-dots"></i>
-                <span class="ms-2" @click="drawer = !drawer"
-                  >Invia un messaggio</span
-                >
+                <span class="ms-2" @click="drawer = !drawer">Invia un messaggio</span>
               </button>
               <button type="button" class="btn btn-light send-message mt-5">
                 <i class="fa-solid fa-pen-to-square"></i>
                 <span class="ms-2">Lascia una recensione</span>
               </button>
-                            <select v-model="vote_input" id="vote" class="form-select my-4" name="vote">
-                                <option value="" selected>Seleziona voto</option>
-                                <option v-for="n in 5" :key="n" :value="n">{{ n }}</option>
-                            </select>
-                            <button type="button" class="btn btn-light center" @click="sendVote">
-                                <i class="fa-solid fa-star text-dark h6"></i>
-                                <span class="ms-2">Invia voto</span>
-                            </button>
+              <select v-model="vote_input" id="vote" class="form-select my-4" name="vote">
+                <option value="" selected>Seleziona voto</option>
+                <option v-for="n in 5" :key="n" :value="n">{{ n }}</option>
+              </select>
+              <button type="button" class="btn btn-light center" @click="sendVote">
+                <i class="fa-solid fa-star text-dark h6"></i>
+                <span class="ms-2">Invia voto</span>
+              </button>
             </div>
           </div>
         </div>
@@ -162,8 +115,9 @@ export default {
       surname: "",
       telephone: "",
       email: "",
-      feedback:false,
+      feedback: false,
       vote_input: '',
+      errors: []
     };
   },
   methods: {
@@ -206,69 +160,165 @@ export default {
         email: this.email,
         profile_id: this.doctor.id,
       };
-      console.log(formData)
-      axios
-        .post(this.store.apiBaseUrl + "/leads", formData)
-        .then((response) => {
-          console.log(response.data);
-          this.message = "";
-          this.message = "";
-          this.name = "",
-          this.surname = "",
-          this.telephone = "",
-          this.email = "";
-          console.log('success');
-          this.drawer=null;
-          this.feedback=true;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      const arrayData = Object.keys(formData).map(key => ({ key, value: formData[key] }));
+      const input = document.getElementById('send-message');
+      const errorMsgId = input.id + '-msg';
+      const parentDiv = input.parentElement;
+      const errorDiv = document.getElementById(errorMsgId);
+      const inputsVal = arrayData.map(field => {
+        return field.value;
+      });
+      const emptyFields = inputsVal.filter(val => val === '').length;
+      if (errorDiv) {
+          errorDiv.remove();
+        }
+      if (emptyFields === 0) {
+        if (this.errors.length === 0) {
+          axios
+            .post(this.store.apiBaseUrl + "/leads", formData)
+            .then((response) => {
+              console.log(response.data);
+              this.message = "";
+              this.name = "",
+                this.surname = "",
+                this.telephone = "",
+                this.email = "";
+              console.log('success');
+              this.drawer = null;
+              this.feedback = true;
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        } else {
+          const newDiv = this.createErrorDiv(errorMsgId, 'Il modulo contiene errori di validazione. Correggi prima di inviare.');
+          newDiv.classList.remove('invalid-feedback');
+          newDiv.classList.add('text-red');
+          parentDiv.appendChild(newDiv);
+        }
+      } else {
+        const newDiv = this.createErrorDiv(errorMsgId, 'Vi sono dei campi obbligatori non compilati');
+        newDiv.classList.remove('invalid-feedback');
+        newDiv.classList.add('text-red');
+        parentDiv.appendChild(newDiv);
+      }
     },
 
-        sendVote(){
-            // console.log(this.vote_input);
-            const formData = {
-                'profile_id': this.doctor.user.id,
-                'vote_id': this.vote_input
-            }
-            axios.post(this.store.apiBaseUrl+'/votes/store',formData).then((response)=>{
-                console.log(response.data);
-            })
+    sendVote() {
+      // console.log(this.vote_input);
+      const formData = {
+        'profile_id': this.doctor.user.id,
+        'vote_id': this.vote_input
+      }
+      axios.post(this.store.apiBaseUrl + '/votes/store', formData).then((response) => {
+        console.log(response.data);
+      })
+    },
+
+    errorsDetector(data) {
+      let message = '';
+      const input = document.getElementById(data);
+      const value = input.value.trim();
+      const errorMsgId = input.id + '-msg';
+      const errorDiv = document.getElementById(errorMsgId);
+      let isValid = true;
+      switch (input.id) {
+        case 'email':
+          isValid = value !== '' && this.isValidEmail(value);
+          message = (value !== '') ? 'Indirizo e-mail non valido' : 'Il campo è obbligatorio'
+          break;
+        case 'name':
+        case 'surname':
+          isValid = value !== '' && this.containsOnlyLetters(input.value);
+          message = (value !== '') ? 'Inserire solo caratteri testuali e massimo 255 caratteri' : 'Il campo è obbligatorio'
+          break;
+        case 'telephone':
+          isValid = value !== '' && value.length >= 10;
+          message = (value !== '') ? 'Numero di telefono non valido' : 'Il campo è obbligatorio'
+          break;
+        case 'message':
+          isValid = value !== '';
+          message = 'Scrivere il messaggio'
+          break;
+        default:
+          isValid = value !== '';
+      }
+      if (!isValid) {
+        input.classList.add('is-invalid');
+        if (!errorDiv) {
+          const parentDiv = input.parentElement;
+          const newDiv = this.createErrorDiv(errorMsgId, message);
+          parentDiv.appendChild(newDiv);
+          this.errors.push(message);
         }
+      } else {
+        input.classList.remove('is-invalid');
+        if (errorDiv) {
+          errorDiv.remove();
+          this.errors.splice(this.errors.indexOf(message), 1);
+        }
+      }
+
+    },
+
+    createErrorDiv(id, message) {
+      const newDiv = document.createElement('div');
+      newDiv.classList.add('invalid-feedback');
+      newDiv.textContent = message;
+      newDiv.setAttribute('id', id);
+      return newDiv;
+    },
+
+    containsOnlyLetters(str) {
+      return /^[a-zA-Z\s]+$/.test(str) && str.length <= 255;
+    },
+
+    isValidEmail(email) {
+      const indexCh = email.indexOf('@');
+      if (indexCh === -1 || indexCh === email.length - 1) {
+        return false;
+      }
+      const emailSplit = email.substring(indexCh);
+      return email.includes('@') && emailSplit.includes('.');
+    }
   },
   created() {
     this.getDoctorData();
   },
-  
+
 };
 </script>
 
 <style lang="scss" scoped>
 @import "@/assets/styles/partials/_variables.scss";
 
-.center{
-    position:relative;
-    left:50%;
-    transform:translateX(-50%);
+.center {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
 }
-.alert-primary{
-    .fa-solid.fa-xmark{
-        position:absolute;
-        top:5px;
-        right:7px;
-        font-size:1.2em
-    }
-    .fa-solid.fa-xmark:hover{
-        cursor:pointer
-    }
+
+.alert-primary {
+  .fa-solid.fa-xmark {
+    position: absolute;
+    top: 5px;
+    right: 7px;
+    font-size: 1.2em
+  }
+
+  .fa-solid.fa-xmark:hover {
+    cursor: pointer
+  }
 }
+
 .btn.btn-warning:hover {
   background-color: #ffca2c !important;
   border: 1px solid rgb(214, 214, 214);
 }
+
 .drawer-header {
   border-bottom: 1px solid rgb(0, 0, 0, 0.2);
+
   .fa-solid.fa-xmark {
     position: absolute;
     padding: 7px 9px;
@@ -279,6 +329,7 @@ export default {
     background-color: rgba(165, 165, 165, 0.2);
     transition: 0.3s;
   }
+
   .fa-solid.fa-xmark:hover {
     background-color: rgb(255, 15, 15);
     cursor: pointer;
@@ -286,6 +337,7 @@ export default {
     transition: 0.2s;
   }
 }
+
 .send-message {
   border: 1px solid rgb(238, 238, 238);
   padding: 10px 10px;
@@ -351,9 +403,10 @@ h4 {
     .fa-star.fa-regular {
       color: $honolulu-blue;
     }
-    .fa-star.h6{
-            font-size: 1em;
-     }
+
+    .fa-star.h6 {
+      font-size: 1em;
+    }
 
     .doctor-votes:hover {
       cursor: pointer;
