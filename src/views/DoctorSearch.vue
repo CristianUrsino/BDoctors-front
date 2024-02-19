@@ -38,8 +38,6 @@
                         <router-link class="btn detail-btn text-uppercase"
                             :to="{ name: 'DoctorDetail', params: {slug: doctor.slug} }"> Mostra dettagli
                             </router-link>
-                                :to="{ name: 'DoctorDetail', params: {slug: doctor.slug} }"> Mostra dettagli
-                                </router-link>
                         <v-btn variant="text" color="teal-accent-4" @click="revealDoctor(doctor)">
                             Contatti
                         </v-btn>
