@@ -10,7 +10,7 @@
             </h4>
             <i class="fa-solid fa-xmark" @click="drawer = false"></i>
           </div>
-          <form @submit.prevent="submitForm" class="mt-2 ms-1">
+          <form @submit.prevent="submitForm('send-message')" class="mt-2 ms-1">
             <div class="mb-3">
               <input id="name" v-model="name" class="form-control" type="text" name="name" placeholder="Nome*"
                 maxlength="255" @blur="errorsDetector('name')" />
@@ -56,27 +56,27 @@
             </h4>
             <i class="fa-solid fa-xmark" @click="drawer_review = false"></i>
           </div>
-          <form @submit.prevent="submitReview" class="mt-2 ms-1">
-            <!--  <div class="mb-3">
-              <input id="name" v-model="review_name" type="text" name="name" class="form-control" placeholder="Nome*"
-                maxlength="255"  />
+          <form @submit.prevent="submitForm('send-review')" class="mt-2 ms-1">
+            <div class="mb-3">
+              <input id="name-review" v-model="review_name" type="text" name="name" class="form-control"
+                placeholder="Nome*" maxlength="255" @blur="errorsDetector('name-review')" />
             </div>
 
             <div class="mb-3">
-              <input id="email" v-model="review_email" type="email" name="email" class="form-control" placeholder="Email*"
-                maxlength="255"  />
+              <input id="email-review" v-model="review_email" type="email" name="email" class="form-control"
+                placeholder="Email*" maxlength="255" @blur="errorsDetector('email-review')" />
             </div>
 
             <div class="mb-3">
-              <textarea class="px-2 py-1" name="message" id="message" cols="75" rows="10"
-                placeholder="Scrivi la tua recensione..." v-model="review_text" ></textarea>
+              <textarea class="px-2 py-1" name="message" id="message-review" cols="75" rows="10"
+                placeholder="Scrivi la tua recensione..." v-model="review_text"
+                @blur="errorsDetector('message-review')"></textarea>
             </div>
- -->
             <div class="d-flex gap-2 ms-2 mt-3">
               <button id="send-message" class="btn btn-light send-message px-5" type="submit">
                 Invia
               </button>
-              <button class="btn btn-warning px-5" type="reset">Resetta</button>
+              <button id="send-review" class="btn btn-warning px-5" type="reset">Resetta</button>
             </div>
           </form>
         </v-navigation-drawer>
@@ -207,8 +207,8 @@ export default {
 
       return average.toFixed(1);
     },
-    submitForm() {
-      const formData = {
+    submitForm(btnId) {
+      const formDataMessage = {
         message: this.message,
         name: this.name,
         surname: this.surname,
@@ -216,8 +216,20 @@ export default {
         email: this.email,
         profile_id: this.doctor.id,
       };
-      const arrayData = Object.keys(formData).map(key => ({ key, value: formData[key] }));
-      const input = document.getElementById('send-message');
+      const formDataReview ={
+        name:this.review_name,
+        email:this.review_email,
+        text:this.review_text
+      };
+      let data = null;
+      if(btnId === 'send-message'){
+        data = formDataMessage;
+      }
+      else if(btnId === 'send-review'){
+        data = formDataReview;
+      }
+      const arrayData = Object.keys(data).map(key => ({ key, value: data[key] }));
+      const input = document.getElementById(btnId);
       const errorMsgId = input.id + '-msg';
       const parentDiv = input.parentElement;
       const errorDiv = document.getElementById(errorMsgId);
@@ -230,22 +242,28 @@ export default {
       }
       if (emptyFields === 0) {
         if (this.errors.length === 0) {
-          axios
-            .post(this.store.apiBaseUrl + "/leads", formData)
-            .then((response) => {
-              console.log(response.data);
-              this.message = "";
-              this.name = "",
-                this.surname = "",
-                this.telephone = "",
-                this.email = "";
-              console.log('success');
-              this.drawer = null;
-              this.feedback = true;
-            })
-            .catch((error) => {
-              console.log(error);
-            });
+          if (btnId === 'send-message') {
+            axios
+              .post(this.store.apiBaseUrl + "/leads", formData)
+              .then((response) => {
+                console.log(response.data);
+                this.message = "";
+                this.name = "",
+                  this.surname = "",
+                  this.telephone = "",
+                  this.email = "";
+                console.log('success');
+                this.drawer = null;
+                this.feedback = true;
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+          }
+          else if(btnId === 'send-review'){
+            this.submitReview();
+          }
+
         } else {
           const newDiv = this.createErrorDiv(errorMsgId, 'Il modulo contiene errori di validazione. Correggi prima di inviare.');
           newDiv.classList.remove('invalid-feedback');
@@ -310,11 +328,13 @@ export default {
       const errorDiv = document.getElementById(errorMsgId);
       let isValid = true;
       switch (input.id) {
+        case 'email-review':
         case 'email':
           isValid = value !== '' && this.isValidEmail(value);
           message = (value !== '') ? 'Indirizo e-mail non valido' : 'Il campo è obbligatorio'
           break;
         case 'name':
+        case 'name-review':
         case 'surname':
           isValid = value !== '' && this.containsOnlyLetters(input.value);
           message = (value !== '') ? 'Inserire solo caratteri testuali e massimo 255 caratteri' : 'Il campo è obbligatorio'
@@ -323,6 +343,7 @@ export default {
           isValid = value !== '' && value.length >= 10;
           message = (value !== '') ? 'Numero di telefono non valido' : 'Il campo è obbligatorio'
           break;
+        case 'message-review':
         case 'message':
           isValid = value !== '';
           message = 'Scrivere il messaggio'
