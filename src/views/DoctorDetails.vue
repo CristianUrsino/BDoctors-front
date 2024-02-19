@@ -4,35 +4,43 @@
     <v-card>
       <v-layout>
         <v-navigation-drawer v-model="drawer" location="right" width="600" temporary>
-          <div class="d-flex align-items-center drawer-header">
+          <div class="d-flex align-items-center justify-space-between drawer-header">
             <h4 class="py-3 ps-2">
               Dr. {{ doctor.user.name }} {{ doctor.user.last_name }}
             </h4>
-            <i class="fa-solid fa-xmark" @click="drawer = false"></i>
+            <button class="btn">
+              <i class="fa-solid fa-xmark" @click="drawer = false"></i>
+            </button>
+
           </div>
           <form @submit.prevent="submitForm('send-message')" class="mt-2 ms-1">
             <div class="mb-3">
+              <label class="form-label" for="name">Nome:*</label>
               <input id="name" v-model="name" class="form-control" type="text" name="name" placeholder="Nome*"
                 maxlength="255" @blur="errorsDetector('name')" />
             </div>
 
             <div class="mb-3">
+              <label class="form-label" for="surname">Cognome:*</label>
               <input id="surname" v-model="surname" type="text" name="surname" class="form-control" placeholder="Cognome*"
                 maxlength="255" @blur="errorsDetector('surname')" />
             </div>
 
             <div class="mb-3">
+              <label class="form-label" for="email">Email:*</label>
               <input id="email" v-model="email" type="email" name="email" class="form-control" placeholder="Email*"
                 maxlength="255" @blur="errorsDetector('email')" />
             </div>
 
             <div class="mb-3">
+              <label class="form-label" for="telephone">Telefono:</label>
               <input id="telephone" v-model="telephone" type="text" name="telephone" class="form-control"
-                placeholder="Tel." maxlength="13" @blur="errorsDetector('telephone')" />
+                placeholder="Tel." maxlength="13" />
             </div>
 
             <div class="mb-3">
-              <textarea class="px-2 py-1" name="message" id="message" cols="75" rows="10"
+              <label class="form-label" for="message">Messaggio:*</label>
+              <textarea class="px-2 py-1 form-control" name="message" id="message" cols="75" rows="10"
                 placeholder="Invia il tuo messaggio..." v-model="message" @blur="errorsDetector('message')"></textarea>
             </div>
 
@@ -40,7 +48,7 @@
               <button id="send-message" class="btn btn-light send-message px-5" type="submit">
                 Invia
               </button>
-              <button class="btn btn-warning px-5" type="reset" @click="resetErrors('send-message')">Resetta</button>
+              <button class="btn btn-warning px-5" type="reset" @click="resetErrors('send-message')">Reset</button>
             </div>
           </form>
         </v-navigation-drawer>
@@ -50,25 +58,37 @@
     <v-card>
       <v-layout>
         <v-navigation-drawer v-model="drawer_review" location="right" width="600" temporary>
-          <div class="d-flex align-items-center drawer-header">
+          <div class="d-flex align-items-center justify-content-between drawer-header">
             <h4 class="py-3 ps-2">
               Dr. {{ doctor.user.name }} {{ doctor.user.last_name }}
             </h4>
-            <i class="fa-solid fa-xmark" @click="drawer_review = false"></i>
+            <button class="btn">
+              <i class="fa-solid fa-xmark" @click="drawer_review = false"></i>
+            </button>
+
           </div>
           <form @submit.prevent="submitForm('send-review')" class="mt-2 ms-1">
             <div class="mb-3">
+              <label class="form-label" for="name-review">Nome:*</label>
               <input id="name-review" v-model="review_name" type="text" name="name" class="form-control"
                 placeholder="Nome*" maxlength="255" @blur="errorsDetector('name-review')" />
             </div>
 
             <div class="mb-3">
+              <label class="form-label" for="email-review">Email:*</label>
               <input id="email-review" v-model="review_email" type="email" name="email" class="form-control"
                 placeholder="Email*" maxlength="255" @blur="errorsDetector('email-review')" />
             </div>
-
+            <!--Titolo -->
             <div class="mb-3">
-              <textarea class="px-2 py-1" name="message" id="message-review" cols="75" rows="10"
+              <label class="form-label" for="title-review">Titolo:*</label>
+              <input id="title-review" v-model="review_title" type="text" name="title" class="form-control"
+                placeholder="Titolo" maxlength="255" />
+            </div>
+            <!-- Recensione-->
+            <div class="mb-3">
+              <label class="form-label" for="message-review">Recensione:*</label>
+              <textarea class="px-2 py-1 form-control" name="message" id="message-review" cols="75" rows="10"
                 placeholder="Scrivi la tua recensione..." v-model="review_text"
                 @blur="errorsDetector('message-review')"></textarea>
             </div>
@@ -77,12 +97,13 @@
                 Invia
               </button>
               <button id="send-review" class="btn btn-warning px-5" type="reset"
-                @click="resetErrors('send-review')">Resetta</button>
+                @click="resetErrors('send-review')">Reset</button>
             </div>
           </form>
         </v-navigation-drawer>
       </v-layout>
     </v-card>
+    <!--Card del Medico-->
     <div class="container">
       <div class="row">
         <div v-if="this.feedback" class="alert alert-primary text-center" role="alert">
@@ -97,15 +118,19 @@
           <h4 class="alert-heading">Il tuo voto è stato inviato con successo!</h4>
           <i class="fa-solid fa-xmark" @click="this.success_vote_input = false"></i>
         </div>
+        <!--Card Dottore-->
         <div class="col-12">
-          <div class="single-doctor-card bg-white p-4 d-flex">
-            <div class="doctor-img">
-              <img :src="doctor.image
-                ? store.imagesBaseUrl + doctor.image
-                : '/images/avatar_doctor.jpg'
-                " :alt="doctor.user.last_name" />
+          <div class=" bg-white py-4 row ">
+            <div class="col-10 col-md-4">
+              <div class="doctor-img">
+                <img :src="doctor.image
+                  ? store.imagesBaseUrl + doctor.image
+                  : '/images/avatar_doctor.jpg'
+                  " :alt="doctor.user.last_name" />
+              </div>
             </div>
-            <div class="doctor-info px-4">
+
+            <div class="doctor-info px-4 col-12 col-md-8 col-lg-6">
               <div class="d-flex align-items-center">
                 <h2>Dr. {{ doctor.user.name }} {{ doctor.user.last_name }}</h2>
                 <i class="fa-solid fa-circle-check ms-2"></i>
@@ -122,6 +147,26 @@
                   <u>{{ doctor.votes.length }} voti</u>
                 </span>
               </div>
+              <!-- Sezione voto -->
+              <div class="container-fluid">
+                <div class="mt-4 row vote-section align-baseline">
+                  <div class="col-12 p-0 col-md-6 col-lg-4">
+                    <select v-model="vote_input" id="vote" class="form-select" name="vote">
+                      <option value="" selected>Seleziona voto</option>
+                      <option v-for="n in 5" :key="n" :value="n">{{ n }}</option>
+                    </select>
+                  </div>
+                  <div class="col-auto">
+                    <button type="button" class="btn btn-light" @click="sendVote">
+                      <i class="fa-solid fa-star h6"></i>
+                      <span class="ms-2">Invia voto</span>
+                    </button>
+                  </div>
+
+
+                  <div v-if="error_vote_input" class="text-danger">errore nell'invio del voto</div>
+                </div>
+              </div>
               <button type="button" class="btn btn-light send-message mt-5 me-3">
                 <i class="fa-regular fa-comment-dots"></i>
                 <span class="ms-2" @click="drawer = !drawer, this.drawer_review = false">Invia un messaggio</span>
@@ -131,17 +176,9 @@
                 <span class="ms-2" @click="drawer_review = !drawer_review, this.drawer = false">Lascia una
                   recensione</span>
               </button>
-              <div class="mt-4 d-flex vote-section align-baseline">
-                <select v-model="vote_input" id="vote" class="form-select " name="vote">
-                  <option value="" selected>Seleziona voto</option>
-                  <option v-for="n in 5" :key="n" :value="n">{{ n }}</option>
-                </select>
-                <button type="button" class="btn btn-light" @click="sendVote">
-                  <i class="fa-solid fa-star h6"></i>
-                  <span class="ms-2">Invia voto</span>
-                </button>
-              </div>
-              <div v-if="error_vote_input" class="text-danger">errore nell'invio del voto</div>
+
+
+
             </div>
           </div>
         </div>
@@ -169,6 +206,7 @@ export default {
       errors: [],
       review_email: "",
       review_text: "",
+      review_title: "",
       review_name: "",
       feedback: false,
       feedback_review: false,
@@ -213,14 +251,15 @@ export default {
         message: this.message,
         name: this.name,
         surname: this.surname,
-        tel: this.telephone.toString(),
+        //tel: this.telephone.toString(),
         email: this.email,
         profile_id: this.doctor.id,
       };
       const formDataReview = {
         name: this.review_name,
         email: this.review_email,
-        text: this.review_text
+        text: this.review_text,
+        //title: this.review_title
       };
       let data = null;
       if (btnId === 'send-message') {
@@ -244,8 +283,11 @@ export default {
       if (emptyFields === 0) {
         if (this.errors.length === 0) {
           if (btnId === 'send-message') {
+            //console.log(formDataMessage);
+            formDataMessage.tel = parseInt(this.telephone);
+            console.log(formDataMessage);
             axios
-              .post(this.store.apiBaseUrl + "/leads", formData)
+              .post(this.store.apiBaseUrl + "/leads", formDataMessage)
               .then((response) => {
                 console.log(response.data);
                 this.message = "";
@@ -283,6 +325,7 @@ export default {
         body: this.review_text,
         name: this.review_name,
         email: this.review_email,
+        title: this.review_title,
         profile_id: this.doctor.id,
       };
       console.log(formData)
@@ -290,9 +333,10 @@ export default {
         .post(this.store.apiBaseUrl + "/reviews", formData)
         .then((response) => {
           console.log(response.data);
-          this.review_message = "";
-          this.review_name = "",
-            this.review_email = "";
+          this.review_text = "";
+          this.review_title = "";
+          this.review_name = "";
+          this.review_email = "";
           console.log('success review');
           this.drawer_review = null;
           this.feedback_review = true;
@@ -340,10 +384,11 @@ export default {
           isValid = value !== '' && this.containsOnlyLetters(input.value);
           message = (value !== '') ? 'Inserire solo caratteri testuali e massimo 255 caratteri' : 'Il campo è obbligatorio'
           break;
-        case 'telephone':
-          isValid = value !== '' && value.length >= 10;
-          message = (value !== '') ? 'Numero di telefono non valido' : 'Il campo è obbligatorio'
-          break;
+        // case 'telephone':
+        //   isValid = value !== '' && value.length >= 10;
+        //   //il campo telefono non è obbligatorio
+        //   message = (value !== '') ? 'Numero di telefono non valido' : 'Il campo è obbligatorio'
+        //   break;
         case 'message-review':
         case 'message':
           isValid = value !== '';
@@ -409,15 +454,15 @@ export default {
         data = formDataMessage;
         this.message = "";
         this.name = "",
-        this.surname = "",
-        this.telephone = "",
-        this.email = "";
+          this.surname = "",
+          this.telephone = "",
+          this.email = "";
       }
       else if (type === 'send-review') {
         data = formDataReview;
         this.review_message = "";
         this.review_name = "",
-        this.review_email = "";
+          this.review_email = "";
       }
       data.forEach(item => {
         const input = document.getElementById(item);
@@ -439,6 +484,10 @@ export default {
 
 <style lang="scss" scoped>
 @import "@/assets/styles/partials/_variables.scss";
+
+img {
+  width: 100%;
+}
 
 .center {
   position: relative;
@@ -511,6 +560,23 @@ export default {
     margin: 0;
   }
 
+  .doctor-img {
+    width: 160px;
+    height: 160px;
+    overflow: hidden;
+    transition: 0.5s;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    img:hover {
+      cursor: pointer;
+    }
+  }
+
   .single-doctor-card {
     border-radius: 5px;
     border: 1px solid rgb(202, 202, 202);
@@ -574,32 +640,32 @@ export default {
         color: rgb(80, 78, 78);
       }
 
-      .vote-section {
-        select {
-          width: 47%;
-          margin-right: 10px
-        }
+      // .vote-section {
+      //   select {
+      //     width: 47%;
+      //     margin-right: 10px
+      //   }
 
-        button {
-          width: 50%;
-          height: 40px;
+      //   button {
+      //     width: 50%;
+      //     height: 40px;
 
-          .fa-star {
-            color: black;
-          }
-        }
+      //     .fa-star {
+      //       color: black;
+      //     }
+      //   }
 
-        button:hover {
-          cursor: pointer;
-          color: white;
+      //   button:hover {
+      //     cursor: pointer;
+      //     color: white;
 
-          .fa-star {
-            color: white;
-          }
+      //     .fa-star {
+      //       color: white;
+      //     }
 
-          border: none;
-        }
-      }
+      //     border: none;
+      //   }
+      // }
     }
   }
 }
