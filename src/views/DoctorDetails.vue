@@ -112,14 +112,18 @@
           <h4 class="alert-heading">Il tuo voto è stato inviato con successo!</h4>
           <i class="fa-solid fa-xmark" @click="this.success_vote_input = false"></i>
         </div>
+        <!--Card Dottore-->
         <div class="col-12">
-          <div class="single-doctor-card bg-white py-4 row ">
-            <div class="doctor-img col-10 col-md-6">
-              <img :src="doctor.image
-                ? store.imagesBaseUrl + doctor.image
-                : '/images/avatar_doctor.jpg'
-                " :alt="doctor.user.last_name" />
+          <div class=" bg-white py-4 row ">
+            <div class="col-10 col-md-4">
+              <div class="doctor-img">
+                <img :src="doctor.image
+                  ? store.imagesBaseUrl + doctor.image
+                  : '/images/avatar_doctor.jpg'
+                  " :alt="doctor.user.last_name" />
+              </div>
             </div>
+
             <div class="doctor-info px-4 col-12 col-md-8 col-lg-6">
               <div class="d-flex align-items-center">
                 <h2>Dr. {{ doctor.user.name }} {{ doctor.user.last_name }}</h2>
@@ -472,6 +476,10 @@ export default {
 <style lang="scss" scoped>
 @import "@/assets/styles/partials/_variables.scss";
 
+img {
+  width: 100%;
+}
+
 .center {
   position: relative;
   left: 50%;
@@ -543,6 +551,23 @@ export default {
     margin: 0;
   }
 
+  .doctor-img {
+    width: 160px;
+    height: 160px;
+    overflow: hidden;
+    transition: 0.5s;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    img:hover {
+      cursor: pointer;
+    }
+  }
+
   .single-doctor-card {
     border-radius: 5px;
     border: 1px solid rgb(202, 202, 202);
@@ -606,32 +631,32 @@ export default {
         color: rgb(80, 78, 78);
       }
 
-      //       .vote-section {
-      //         select {
-      //           width: 47%;
-      //           margin-right: 10px
-      //         }
+      // .vote-section {
+      //   select {
+      //     width: 47%;
+      //     margin-right: 10px
+      //   }
 
-      //         button {
-      //           width: 50%;
-      //           height: 40px;
+      //   button {
+      //     width: 50%;
+      //     height: 40px;
 
-      //           .fa-star {
-      //             color: black;
-      //           }
-      //         }
+      //     .fa-star {
+      //       color: black;
+      //     }
+      //   }
 
-      //         button:hover {
-      //           cursor: pointer;
-      //           color: white;
+      //   button:hover {
+      //     cursor: pointer;
+      //     color: white;
 
-      //           .fa-star {
-      //             color: white;
-      //           }
+      //     .fa-star {
+      //       color: white;
+      //     }
 
-      //           border: none;
-      //         }
-      //       }
+      //     border: none;
+      //   }
+      // }
     }
   }
 }
