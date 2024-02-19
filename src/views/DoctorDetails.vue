@@ -283,7 +283,9 @@ export default {
       if (emptyFields === 0) {
         if (this.errors.length === 0) {
           if (btnId === 'send-message') {
-            //console.log(formData);
+            //console.log(formDataMessage);
+            formDataMessage.tel = parseInt(this.telephone);
+            console.log(formDataMessage);
             axios
               .post(this.store.apiBaseUrl + "/leads", formDataMessage)
               .then((response) => {
