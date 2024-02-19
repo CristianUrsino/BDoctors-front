@@ -51,11 +51,11 @@
                                 <i class="fa-solid fa-pen-to-square"></i>
                                 <span class="ms-2">Lascia una recensione</span>
                             </button>
-                            <select v-model="vote_input" id="vote" class="send-message" name="vote">
+                            <select v-model="vote_input" id="vote" class="form-select my-4" name="vote">
                                 <option value="" selected>Seleziona voto</option>
                                 <option v-for="n in 5" :key="n" :value="n">{{ n }}</option>
                             </select>
-                            <button type="button" class="btn btn-light" @click="sendVote">
+                            <button type="button" class="btn btn-light center" @click="sendVote">
                                 <i class="fa-solid fa-star text-dark h6"></i>
                                 <span class="ms-2">Invia voto</span>
                             </button>
@@ -144,7 +144,11 @@ export default {
 
 <style lang="scss" scoped>
 @import "@/assets/styles/partials/_variables.scss";
-
+.center{
+    position:relative;
+    left:50%;
+    transform:translateX(-50%);
+}
 .btn.btn-warning:hover{
     background-color: #ffca2c !important;
     border: 1px solid rgb(214, 214, 214)
