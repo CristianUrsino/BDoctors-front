@@ -83,6 +83,13 @@
             <h4 class="alert-heading">Il tuo messaggio è stato inviato con successo!</h4>
             <i class="fa-solid fa-xmark" @click="this.feedback = false"></i>
         </div>
+        <div v-if="this.success_vote_input"
+            class="alert alert-primary text-center" 
+            role="alert"
+        >
+            <h4 class="alert-heading">Il tuo voto è stato inviato con successo!</h4>
+            <i class="fa-solid fa-xmark" @click="this.success_vote_input = false"></i>
+        </div>
         
         <div class="col-12">
           <div class="single-doctor-card bg-white p-4 d-flex">
@@ -139,7 +146,6 @@
                     <i class="fa-solid fa-star text-dark h6"></i>
                     <span class="ms-2">Invia voto</span>
                 </button>
-                <div v-if="success_vote_input" class="text-success">voto inviato con successo</div>
                 <div v-if="error_vote_input" class="text-danger">errore nell'invio del voto</div>
             </div>
           </div>
@@ -239,7 +245,10 @@ export default {
                 'vote_id': this.vote_input
             }
             axios.post(this.store.apiBaseUrl+'/votes/store',formData).then((response)=>{
-                if(response.data.success)this.success_vote_input = true;
+                if(response.data.success){
+                    this.success_vote_input = true;
+                    this.getDoctorData();
+                }
                 else this.error_vote_input = true
                 console.log(response.data);
                 // console.log("successo: "+this.success_vote_input);
