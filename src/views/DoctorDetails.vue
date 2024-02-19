@@ -131,7 +131,6 @@
                 <i class="fa-solid fa-pen-to-square"></i>
                 <span class="ms-2">Lascia una recensione</span>
               </button>
-              </button>
                             <select v-model="vote_input" id="vote" class="form-select my-4" name="vote">
                                 <option value="" selected>Seleziona voto</option>
                                 <option v-for="n in 5" :key="n" :value="n">{{ n }}</option>
