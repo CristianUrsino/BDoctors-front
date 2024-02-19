@@ -35,6 +35,9 @@
                     <v-card-text>{{ doctor.address }} <br> Voto Medio: {{ calculateRating(doctor) }}</v-card-text>
 
                     <v-card-actions>
+                        <router-link class="btn detail-btn text-uppercase"
+                            :to="{ name: 'DoctorDetail', params: {slug: doctor.slug} }"> Mostra dettagli
+                            </router-link>
                         <v-btn variant="text" color="teal-accent-4" @click="revealDoctor(doctor)">
                             Contatti
                         </v-btn>
@@ -50,9 +53,6 @@
                                 <span>{{ doctor.tel }}</span>
                             </v-card-text>
                             <v-card-actions class="pt-0">
-                                <router-link class="btn detail-btn text-uppercase pt-2"
-                                :to="{ name: 'DoctorDetail', params: {slug: doctor.slug} }"> Mostra dettagli
-                                </router-link>
                                 <v-btn variant="text" color="teal-accent-4" @click="hideReveal(doctor)">
                                     Chiudi
                                 </v-btn>
@@ -192,6 +192,7 @@ img {
     color:#00bfa5;
     font-weight: 500;
     font-size: 0.9em;
+    padding-top: 7px;
 }
 .detail-btn:hover{
     background-color:rgb(245, 255, 249);
