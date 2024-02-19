@@ -131,14 +131,16 @@
                 <i class="fa-solid fa-pen-to-square"></i>
                 <span class="ms-2">Lascia una recensione</span>
               </button>
-                            <select v-model="vote_input" id="vote" class="form-select my-4" name="vote">
-                                <option value="" selected>Seleziona voto</option>
-                                <option v-for="n in 5" :key="n" :value="n">{{ n }}</option>
-                            </select>
-                            <button type="button" class="btn btn-light center" @click="sendVote">
-                                <i class="fa-solid fa-star text-dark h6"></i>
-                                <span class="ms-2">Invia voto</span>
-                            </button>
+                <select v-model="vote_input" id="vote" class="form-select my-4" name="vote">
+                    <option value="" selected>Seleziona voto</option>
+                    <option v-for="n in 5" :key="n" :value="n">{{ n }}</option>
+                </select>
+                <button type="button" class="btn btn-light center" @click="sendVote">
+                    <i class="fa-solid fa-star text-dark h6"></i>
+                    <span class="ms-2">Invia voto</span>
+                </button>
+                <div v-if="success_vote_input" class="text-success">voto inviato con successo</div>
+                <div v-if="error_vote_input" class="text-danger">errore nell'invio del voto</div>
             </div>
           </div>
         </div>
@@ -164,6 +166,8 @@ export default {
       email: "",
       feedback:false,
       vote_input: '',
+      error_vote_input: false,
+      success_vote_input: false,
     };
   },
   methods: {
@@ -228,13 +232,20 @@ export default {
 
         sendVote(){
             // console.log(this.vote_input);
+            this.success_vote_input = false;
+            this.error_vote_input = false;
             const formData = {
                 'profile_id': this.doctor.user.id,
                 'vote_id': this.vote_input
             }
             axios.post(this.store.apiBaseUrl+'/votes/store',formData).then((response)=>{
+                if(response.data.success)this.success_vote_input = true;
+                else this.error_vote_input = true
                 console.log(response.data);
+                // console.log("successo: "+this.success_vote_input);
+                // console.log("fail:" + this.error_vote_input);
             })
+            
         }
   },
   created() {
