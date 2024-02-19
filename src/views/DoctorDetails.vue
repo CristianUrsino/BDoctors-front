@@ -131,6 +131,15 @@
                 <i class="fa-solid fa-pen-to-square"></i>
                 <span class="ms-2">Lascia una recensione</span>
               </button>
+              </button>
+                            <select v-model="vote_input" id="vote" class="form-select my-4" name="vote">
+                                <option value="" selected>Seleziona voto</option>
+                                <option v-for="n in 5" :key="n" :value="n">{{ n }}</option>
+                            </select>
+                            <button type="button" class="btn btn-light center" @click="sendVote">
+                                <i class="fa-solid fa-star text-dark h6"></i>
+                                <span class="ms-2">Invia voto</span>
+                            </button>
             </div>
           </div>
         </div>
@@ -155,6 +164,7 @@ export default {
       telephone: "",
       email: "",
       feedback:false,
+      vote_input: '',
     };
   },
   methods: {
@@ -216,15 +226,33 @@ export default {
           console.log(error);
         });
     },
+
+        sendVote(){
+            // console.log(this.vote_input);
+            const formData = {
+                'profile_id': this.doctor.user.id,
+                'vote_id': this.vote_input
+            }
+            axios.post(this.store.apiBaseUrl+'/votes/store',formData).then((response)=>{
+                console.log(response.data);
+            })
+        }
   },
   created() {
     this.getDoctorData();
   },
+  
 };
 </script>
 
 <style lang="scss" scoped>
 @import "@/assets/styles/partials/_variables.scss";
+
+.center{
+    position:relative;
+    left:50%;
+    transform:translateX(-50%);
+}
 .alert-primary{
     .fa-solid.fa-xmark{
         position:absolute;
@@ -324,6 +352,9 @@ h4 {
     .fa-star.fa-regular {
       color: $honolulu-blue;
     }
+    .fa-star.h6{
+            font-size: 1em;
+     }
 
     .doctor-votes:hover {
       cursor: pointer;
