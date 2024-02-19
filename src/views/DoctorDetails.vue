@@ -81,7 +81,7 @@
             </div>
             <!--Titolo -->
             <div class="mb-3">
-              <label class="form-label" for="title-review">Titolo:*</label>
+              <label class="form-label" for="title-review">Titolo:</label>
               <input id="title-review" v-model="review_title" type="text" name="title" class="form-control"
                 placeholder="Titolo" maxlength="255" />
             </div>
