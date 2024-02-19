@@ -40,7 +40,7 @@
               <button id="send-message" class="btn btn-light send-message px-5" type="submit">
                 Invia
               </button>
-              <button class="btn btn-warning px-5" type="reset">Resetta</button>
+              <button class="btn btn-warning px-5" type="reset" @click="resetErrors('send-message')">Resetta</button>
             </div>
           </form>
         </v-navigation-drawer>
@@ -76,7 +76,8 @@
               <button id="send-message" class="btn btn-light send-message px-5" type="submit">
                 Invia
               </button>
-              <button id="send-review" class="btn btn-warning px-5" type="reset">Resetta</button>
+              <button id="send-review" class="btn btn-warning px-5" type="reset"
+                @click="resetErrors('send-review')">Resetta</button>
             </div>
           </form>
         </v-navigation-drawer>
@@ -216,16 +217,16 @@ export default {
         email: this.email,
         profile_id: this.doctor.id,
       };
-      const formDataReview ={
-        name:this.review_name,
-        email:this.review_email,
-        text:this.review_text
+      const formDataReview = {
+        name: this.review_name,
+        email: this.review_email,
+        text: this.review_text
       };
       let data = null;
-      if(btnId === 'send-message'){
+      if (btnId === 'send-message') {
         data = formDataMessage;
       }
-      else if(btnId === 'send-review'){
+      else if (btnId === 'send-review') {
         data = formDataReview;
       }
       const arrayData = Object.keys(data).map(key => ({ key, value: data[key] }));
@@ -260,7 +261,7 @@ export default {
                 console.log(error);
               });
           }
-          else if(btnId === 'send-review'){
+          else if (btnId === 'send-review') {
             this.submitReview();
           }
 
@@ -387,6 +388,46 @@ export default {
       }
       const emailSplit = email.substring(indexCh);
       return email.includes('@') && emailSplit.includes('.');
+    },
+
+    resetErrors(type) {
+      this.errors = [];
+      const formDataMessage = [
+        'message',
+        'name',
+        'surname',
+        'telephone',
+        'email'
+      ];
+      const formDataReview = [
+        'name-review',
+        'email-review',
+        'text-review'
+      ];
+      let data = null;
+      if (type === 'send-message') {
+        data = formDataMessage;
+        this.message = "";
+        this.name = "",
+        this.surname = "",
+        this.telephone = "",
+        this.email = "";
+      }
+      else if (type === 'send-review') {
+        data = formDataReview;
+        this.review_message = "";
+        this.review_name = "",
+        this.review_email = "";
+      }
+      data.forEach(item => {
+        const input = document.getElementById(item);
+        input.classList.remove('is-invalid');
+        const errorMsgId = input.id + '-msg';
+        const errorDiv = document.getElementById(errorMsgId);
+        if (errorDiv) {
+          errorDiv.remove();
+        }
+      })
     }
   },
   created() {
