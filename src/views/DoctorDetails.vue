@@ -15,27 +15,32 @@
           </div>
           <form @submit.prevent="submitForm('send-message')" class="mt-2 ms-1">
             <div class="mb-3">
+              <label class="form-label" for="name">Nome:*</label>
               <input id="name" v-model="name" class="form-control" type="text" name="name" placeholder="Nome*"
                 maxlength="255" @blur="errorsDetector('name')" />
             </div>
 
             <div class="mb-3">
+              <label class="form-label" for="surname">Cognome:*</label>
               <input id="surname" v-model="surname" type="text" name="surname" class="form-control" placeholder="Cognome*"
                 maxlength="255" @blur="errorsDetector('surname')" />
             </div>
 
             <div class="mb-3">
+              <label class="form-label" for="email">Email:*</label>
               <input id="email" v-model="email" type="email" name="email" class="form-control" placeholder="Email*"
                 maxlength="255" @blur="errorsDetector('email')" />
             </div>
 
             <div class="mb-3">
+              <label class="form-label" for="telephone">Telefono:</label>
               <input id="telephone" v-model="telephone" type="text" name="telephone" class="form-control"
-                placeholder="Tel." maxlength="13" @blur="errorsDetector('telephone')" />
+                placeholder="Tel." maxlength="13" />
             </div>
 
             <div class="mb-3">
-              <textarea class="px-2 py-1" name="message" id="message" cols="75" rows="10"
+              <label class="form-label" for="message">Messaggio:*</label>
+              <textarea class="px-2 py-1 form-control" name="message" id="message" cols="75" rows="10"
                 placeholder="Invia il tuo messaggio..." v-model="message" @blur="errorsDetector('message')"></textarea>
             </div>
 
@@ -43,7 +48,7 @@
               <button id="send-message" class="btn btn-light send-message px-5" type="submit">
                 Invia
               </button>
-              <button class="btn btn-warning px-5" type="reset" @click="resetErrors('send-message')">Resetta</button>
+              <button class="btn btn-warning px-5" type="reset" @click="resetErrors('send-message')">Reset</button>
             </div>
           </form>
         </v-navigation-drawer>
@@ -98,6 +103,7 @@
         </v-navigation-drawer>
       </v-layout>
     </v-card>
+    <!--Card del Medico-->
     <div class="container">
       <div class="row">
         <div v-if="this.feedback" class="alert alert-primary text-center" role="alert">
@@ -245,7 +251,7 @@ export default {
         message: this.message,
         name: this.name,
         surname: this.surname,
-        tel: this.telephone.toString(),
+        //tel: this.telephone.toString(),
         email: this.email,
         profile_id: this.doctor.id,
       };
@@ -277,8 +283,9 @@ export default {
       if (emptyFields === 0) {
         if (this.errors.length === 0) {
           if (btnId === 'send-message') {
+            //console.log(formData);
             axios
-              .post(this.store.apiBaseUrl + "/leads", formData)
+              .post(this.store.apiBaseUrl + "/leads", formDataMessage)
               .then((response) => {
                 console.log(response.data);
                 this.message = "";
@@ -375,11 +382,11 @@ export default {
           isValid = value !== '' && this.containsOnlyLetters(input.value);
           message = (value !== '') ? 'Inserire solo caratteri testuali e massimo 255 caratteri' : 'Il campo è obbligatorio'
           break;
-        case 'telephone':
-          isValid = value !== '' && value.length >= 10;
-          //il campo telefono non è obbligatorio
-          message = (value !== '') ? 'Numero di telefono non valido' : 'Il campo è obbligatorio'
-          break;
+        // case 'telephone':
+        //   isValid = value !== '' && value.length >= 10;
+        //   //il campo telefono non è obbligatorio
+        //   message = (value !== '') ? 'Numero di telefono non valido' : 'Il campo è obbligatorio'
+        //   break;
         case 'message-review':
         case 'message':
           isValid = value !== '';
