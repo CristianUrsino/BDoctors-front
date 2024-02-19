@@ -83,7 +83,7 @@
             <div class="mb-3">
               <label class="form-label" for="title-review">Titolo:*</label>
               <input id="title-review" v-model="review_title" type="text" name="title" class="form-control"
-                placeholder="Titolo" maxlength="255" @blur="errorsDetector('title-review')" />
+                placeholder="Titolo" maxlength="255" />
             </div>
             <!-- Recensione-->
             <div class="mb-3">
@@ -259,7 +259,7 @@ export default {
         name: this.review_name,
         email: this.review_email,
         text: this.review_text,
-        title: this.review_title
+        //title: this.review_title
       };
       let data = null;
       if (btnId === 'send-message') {
