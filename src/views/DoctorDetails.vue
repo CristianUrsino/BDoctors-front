@@ -196,6 +196,7 @@ export default {
       errors: [],
       review_email: "",
       review_text: "",
+      review_title: "",
       review_name: "",
       feedback: false,
       feedback_review: false,
@@ -247,7 +248,8 @@ export default {
       const formDataReview = {
         name: this.review_name,
         email: this.review_email,
-        text: this.review_text
+        text: this.review_text,
+        title: this.review_title
       };
       let data = null;
       if (btnId === 'send-message') {
@@ -310,6 +312,7 @@ export default {
         body: this.review_text,
         name: this.review_name,
         email: this.review_email,
+        title: this.review_title,
         profile_id: this.doctor.id,
       };
       console.log(formData)
@@ -317,9 +320,10 @@ export default {
         .post(this.store.apiBaseUrl + "/reviews", formData)
         .then((response) => {
           console.log(response.data);
-          this.review_message = "";
-          this.review_name = "",
-            this.review_email = "";
+          this.review_text = "";
+          this.review_title = "";
+          this.review_name = "";
+          this.review_email = "";
           console.log('success review');
           this.drawer_review = null;
           this.feedback_review = true;
