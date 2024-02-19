@@ -63,6 +63,7 @@
               rows="10"
               placeholder="Invia il tuo messaggio..."
               v-model="message"
+              required
             ></textarea>
             <div class="d-flex gap-2 ms-2 mt-3">
               <button class="btn btn-light send-message px-5" type="submit">
@@ -108,7 +109,8 @@
                 <h2>Dr. {{ doctor.user.name }} {{ doctor.user.last_name }}</h2>
                 <i class="fa-solid fa-circle-check ms-2"></i>
               </div>
-              <span class="speciaties">{{ doctor.address }}</span>
+              <span class="speciaties d-block mb-1">{{ doctor.specialties[0].name }}</span>
+              <span class="address">{{ doctor.address}}</span>
               <div class="doctor-rating d-flex mt-2">
                 <div>
                   <!-- <i class="fa-solid fa-star" v-for="n in 5"></i> -->
@@ -360,7 +362,8 @@ h4 {
     }
 
     .speciaties {
-      font-size: 1.1em;
+      font-size: 1.2em;
+      font-weight: 500;
     }
 
     .fa-solid.fa-star {
