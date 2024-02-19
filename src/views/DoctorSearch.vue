@@ -19,8 +19,10 @@
             </div>
             <div>
                 <input type="text" v-model="searchName" placeholder="Cerca per nome">
-                <button class="btn btn-search" @click="searchDoctor">Cerca</button>
+                <button class="btn btn-search" @click="searchDoctor">Cerca</button>    
             </div>
+
+            <div class="loader" v-if="loading"></div>
 
 
         </div>
@@ -81,7 +83,7 @@ export default {
 
             ratings: [1, 2, 3, 4, 5],
             professions: [],
-
+            loading: false,
         }
     },
     methods: {
@@ -147,6 +149,7 @@ export default {
             doctor.reveal = false;
         },
         searchDoctor() {
+            this.loading = true;
             console.log(this.selectedProfession);
             console.log(this.selectedRating);
             axios.get(`${this.store.apiBaseUrl}/doctors`, {
@@ -158,10 +161,12 @@ export default {
             })
                 .then(response => {
                     this.doctors = response.data.results;
+                    this.loading = false;
                     console.log(this.doctors);
 
                 })
                 .catch(error => {
+                    this.loading = false;
                     console.error('Error searching doctors:', error);
                 });
         }
@@ -197,6 +202,24 @@ img {
 .detail-btn:hover{
     background-color:rgb(245, 255, 249);
     border:1px solid white
+}
+
+.loader {
+    border: 16px solid #f3f3f3;
+    border-top: 16px solid #3498db;
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    animation: spin 2s linear infinite;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 @media screen and (max-width: 768px) {
     .container {
