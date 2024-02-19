@@ -51,6 +51,14 @@
                                 <i class="fa-solid fa-pen-to-square"></i>
                                 <span class="ms-2">Lascia una recensione</span>
                             </button>
+                            <select v-model="vote_input" id="vote" class="send-message" name="vote">
+                                <option value="" selected>Seleziona voto</option>
+                                <option v-for="n in 5" :key="n" :value="n">{{ n }}</option>
+                            </select>
+                            <button type="button" class="btn btn-light" @click="sendVote">
+                                <i class="fa-solid fa-star text-dark h6"></i>
+                                <span class="ms-2">Invia voto</span>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -70,6 +78,7 @@ export default {
             store,
             drawer: null,
             message:'',
+            vote_input: '',
         };
     },
     methods: {
@@ -113,11 +122,23 @@ export default {
         }).catch((error)=>{
             console.log(error)
         })
+        },
+
+        sendVote(){
+            // console.log(this.vote_input);
+            const formData = {
+                'profile_id': this.doctor.user.id,
+                'vote_id': this.vote_input
+            }
+            axios.post(this.store.apiBaseUrl+'/votes/store',formData).then((response)=>{
+                console.log(response.data);
+            })
         }
     },
     created() {
         this.getDoctorData();
     },
+    
 };
 </script>
 
@@ -211,6 +232,10 @@ h4 {
 
         .fa-star.fa-regular {
             color: $honolulu-blue;
+        }
+
+        .fa-star.h6{
+            font-size: 1em;
         }
 
         .doctor-votes:hover {
