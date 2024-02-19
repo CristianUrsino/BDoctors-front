@@ -6,7 +6,8 @@
                 <label for="professionSelect">Selezione Professione:</label>
                 <select class="form-select " id="professionSelect" v-model="selectedProfession">
                     <option value="">Tutte le professioni</option>
-                    <option v-for="profession in professions" :key="profession.id" :value="profession.id">{{ profession.name
+                    <option v-for="profession in store.specialties" :key="profession.id" :value="profession.id">{{
+                        profession.name
                     }}</option>
                 </select>
             </div>
@@ -19,7 +20,7 @@
             </div>
             <div>
                 <input type="text" v-model="searchName" placeholder="Cerca per nome">
-                <button class="btn btn-search" @click="searchDoctor">Cerca</button>    
+                <button class="btn btn-search" @click="searchDoctor">Cerca</button>
             </div>
 
             <button class="btn btn-primary" @click="orderByVotes">Ordina per numero di voti</button>
@@ -41,8 +42,8 @@
                     <v-card-text>Numero di Voti: {{ calculateVoteCount(doctor) }}</v-card-text>
                     <v-card-actions>
                         <router-link class="btn detail-btn text-uppercase"
-                            :to="{ name: 'DoctorDetail', params: {slug: doctor.slug} }"> Mostra dettagli
-                            </router-link>
+                            :to="{ name: 'DoctorDetail', params: { slug: doctor.slug } }"> Mostra dettagli
+                        </router-link>
                         <v-btn variant="text" color="teal-accent-4" @click="revealDoctor(doctor)">
                             Contatti
                         </v-btn>
@@ -107,43 +108,25 @@ export default {
             axios.get(`${this.store.apiBaseUrl}/doctors`)
                 .then(response => {
                     this.doctors = response.data.results;
-                    let namesArray = [];
-                    const specialties = this.doctors.reduce((acc, doctor) => {
-                        //console.log(acc);
-
-                        doctor.specialties.forEach(specialty => {
-                            console.log(specialty);
-                            if (!namesArray.includes(specialty.name)) {
-                                namesArray.push(specialty.name);
-                                acc.push(specialty);
-                            }
-                        });
-                        //console.log(namesArray);
-                        return acc;
-                    }, []);
-                    this.professions = specialties;
-
-
-
                 })
                 .catch(error => {
                     console.error('Error fetching doctors:', error);
                 });
         },
         calculateRating(doctor) {
-            
+
             if (doctor.votes.length === 0) {
-                return 'N/A'; 
+                return 'N/A';
             }
 
-           
+
             let total = 0;
             doctor.votes.forEach(vote => {
                 total += vote.value;
             });
             const average = total / doctor.votes.length;
 
-            return average.toFixed(1); 
+            return average.toFixed(1);
         },
         revealDoctor(doctor) {
             doctor.reveal = true;
@@ -174,25 +157,25 @@ export default {
                 });
         },
         orderByVotes() {
-            
+
             axios.get(`${this.store.apiBaseUrl}/doctors`, {
                 params: {
                     order_by_votes: true,
                     specialty: this.selectedProfession,
                     min_vote_average: this.selectedRating,
                     name: this.searchName
-                    
+
                 }
             })
-            .then(response => {
-                this.doctors = response.data.results; 
-            })
-            .catch(error => {
-                console.error('Error ordering doctors by votes:', error);
-            });
+                .then(response => {
+                    this.doctors = response.data.results;
+                })
+                .catch(error => {
+                    console.error('Error ordering doctors by votes:', error);
+                });
         },
         calculateVoteCount(doctor) {
-        return doctor.votes.length;
+            return doctor.votes.length;
         },
     },
     created() {
@@ -217,15 +200,17 @@ img {
     position: absolute;
     width: 100%;
 }
-.detail-btn{
-    color:#00bfa5;
+
+.detail-btn {
+    color: #00bfa5;
     font-weight: 500;
     font-size: 0.9em;
     padding-top: 7px;
 }
-.detail-btn:hover{
-    background-color:rgb(245, 255, 249);
-    border:1px solid white
+
+.detail-btn:hover {
+    background-color: rgb(245, 255, 249);
+    border: 1px solid white
 }
 
 .loader {
@@ -242,9 +227,15 @@ img {
 }
 
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
+
 @media screen and (max-width: 768px) {
     .container {
         padding-top: 180px;
