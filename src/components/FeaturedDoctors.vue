@@ -29,16 +29,18 @@ export default {
     DoctorCards,
   },
   methods: {
-    getAllDoctors() {
-      axios.get(store.apiBaseUrl + "/doctors").then((res) => {
-        console.log(res.data.results);
-        this.doctorList = res.data.results;
-        this.sponsoredDoctors = this.doctorList.slice(0, 3);
+    getFeaturedDoctors() {
+      //console.log(this.store.doctors);
+      let result = this.store.doctors.filter(el => {
+
+        return el.sponsorships.length > 0;
       });
+      this.sponsoredDoctors = result;
+      //console.log(this.doctorList);
     },
   },
-  created() {
-    this.getAllDoctors();
+  mounted() {
+    this.getFeaturedDoctors();
   },
 };
 </script>
