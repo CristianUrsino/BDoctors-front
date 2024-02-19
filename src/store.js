@@ -6,6 +6,7 @@ export const store = reactive({
     imagesBaseUrl: "http://127.0.0.1:8000/storage/",
     selectedProfession: '',
     doctors: null,
+    specialties: null,
     loading: false,
 
 });

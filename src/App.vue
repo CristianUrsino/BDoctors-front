@@ -45,8 +45,23 @@ export default {
     getAllDoctors() {
       this.store.loading = true;
       axios.get(store.apiBaseUrl + "/doctors").then((res) => {
-        console.log(res.data.results);
+        //console.log(res.data.results);
         this.store.doctors = res.data.results;
+        let namesArray = [];
+        const specialties = this.store.doctors.reduce((acc, doctor) => {
+          //console.log(acc);
+
+          doctor.specialties.forEach(specialty => {
+            //console.log(specialty);
+            if (!namesArray.includes(specialty.name)) {
+              namesArray.push(specialty.name);
+              acc.push(specialty);
+            }
+          });
+          //console.log(namesArray);
+          return acc;
+        }, []);
+        this.store.specialties = specialties;
         // this.sponsoredDoctors = this.doctorList.slice(0, 3);
       }).catch(err => {
         console.log(err);
