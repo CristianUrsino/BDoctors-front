@@ -22,6 +22,9 @@
                 <button class="btn btn-search" @click="searchDoctor">Cerca</button>    
             </div>
 
+            <button class="btn btn-primary" @click="orderByVotes">Ordina per numero di voti</button>
+
+
             <div class="loader" v-if="loading"></div>
 
 
@@ -35,7 +38,7 @@
                             alt="Avatar">
                     </v-avatar>
                     <v-card-text>{{ doctor.address }} <br> Voto Medio: {{ calculateRating(doctor) }}</v-card-text>
-
+                    <v-card-text>Numero di Voti: {{ calculateVoteCount(doctor) }}</v-card-text>
                     <v-card-actions>
                         <router-link class="btn detail-btn text-uppercase"
                             :to="{ name: 'DoctorDetail', params: {slug: doctor.slug} }"> Mostra dettagli
@@ -169,7 +172,28 @@ export default {
                     this.loading = false;
                     console.error('Error searching doctors:', error);
                 });
-        }
+        },
+        orderByVotes() {
+            
+            axios.get(`${this.store.apiBaseUrl}/doctors`, {
+                params: {
+                    order_by_votes: true,
+                    specialty: this.selectedProfession,
+                    min_vote_average: this.selectedRating,
+                    name: this.searchName
+                    
+                }
+            })
+            .then(response => {
+                this.doctors = response.data.results; 
+            })
+            .catch(error => {
+                console.error('Error ordering doctors by votes:', error);
+            });
+        },
+        calculateVoteCount(doctor) {
+        return doctor.votes.length;
+        },
     },
     created() {
         const params = new URLSearchParams(window.location.search);
