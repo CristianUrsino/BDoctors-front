@@ -11,18 +11,33 @@
             <i class="fa-solid fa-xmark" @click="drawer = false"></i>
           </div>
           <form @submit.prevent="submitForm" class="mt-2 ms-1">
-            <input id="name" v-model="name" type="text" name="name" class="mb-3 form-control" placeholder="Nome*"
-              maxlength="255" required />
-            <input id="surname" v-model="surname" type="text" name="surname" class="mb-3 form-control"
-              placeholder="Cognome*" maxlength="255" required />
-            <input id="email" v-model="email" type="email" name="email" class="mb-3 form-control" placeholder="Email*"
-              maxlength="255" required />
-            <input id="telephone" v-model="telephone" type="number" name="telephone" class="mb-3 form-control"
-              placeholder="Tel." maxlength="13" />
-            <textarea class="mt-3 px-2 py-1" name="message" id="message" cols="75" rows="10"
-              placeholder="Invia il tuo messaggio..." v-model="message" required></textarea>
+            <div class="mb-3">
+              <input id="name" v-model="name" class="form-control" type="text" name="name" placeholder="Nome*"
+                maxlength="255" @blur="errorsDetector('name')" />
+            </div>
+
+            <div class="mb-3">
+              <input id="surname" v-model="surname" type="text" name="surname" class="form-control" placeholder="Cognome*"
+                maxlength="255" @blur="errorsDetector('surname')" />
+            </div>
+
+            <div class="mb-3">
+              <input id="email" v-model="email" type="email" name="email" class="form-control" placeholder="Email*"
+                maxlength="255" @blur="errorsDetector('email')" />
+            </div>
+
+            <div class="mb-3">
+              <input id="telephone" v-model="telephone" type="text" name="telephone" class="form-control"
+                placeholder="Tel." maxlength="13" @blur="errorsDetector('telephone')" />
+            </div>
+
+            <div class="mb-3">
+              <textarea class="px-2 py-1" name="message" id="message" cols="75" rows="10"
+                placeholder="Invia il tuo messaggio..." v-model="message" @blur="errorsDetector('message')"></textarea>
+            </div>
+
             <div class="d-flex gap-2 ms-2 mt-3">
-              <button class="btn btn-light send-message px-5" type="submit">
+              <button id="send-message" class="btn btn-light send-message px-5" type="submit">
                 Invia
               </button>
               <button class="btn btn-warning px-5" type="reset">Resetta</button>
@@ -42,12 +57,21 @@
             <i class="fa-solid fa-xmark" @click="drawer_review = false"></i>
           </div>
           <form @submit.prevent="submitReview" class="mt-2 ms-1">
-            <input id="name" v-model="review_name" type="text" name="name" class="mb-3 form-control" placeholder="Nome*"
-              maxlength="255" required />
-            <input id="email" v-model="review_email" type="email" name="email" class="mb-3 form-control"
-              placeholder="Email*" maxlength="255" required />
-            <textarea class="mt-3 px-2 py-1" name="message" id="message" cols="75" rows="10"
-              placeholder="Scrivi la tua recensione..." v-model="review_text" required></textarea>
+            <!--  <div class="mb-3">
+              <input id="name" v-model="review_name" type="text" name="name" class="form-control" placeholder="Nome*"
+                maxlength="255"  />
+            </div>
+
+            <div class="mb-3">
+              <input id="email" v-model="review_email" type="email" name="email" class="form-control" placeholder="Email*"
+                maxlength="255"  />
+            </div>
+
+            <div class="mb-3">
+              <textarea class="px-2 py-1" name="message" id="message" cols="75" rows="10"
+                placeholder="Scrivi la tua recensione..." v-model="review_text" ></textarea>
+            </div>
+ -->
             <div class="d-flex gap-2 ms-2 mt-3">
               <button id="send-message" class="btn btn-light send-message px-5" type="submit">
                 Invia
@@ -259,7 +283,6 @@ export default {
         });
     },
     sendVote() {
-      // console.log(this.vote_input);
       if (this.vote_input === '' || this.vote_input === null || this.vote_input > 5) {
         this.error_vote_input = true;
         return
@@ -276,9 +299,6 @@ export default {
           this.getDoctorData();
         }
         else this.error_vote_input = true
-        console.log(response.data);
-        // console.log("successo: "+this.success_vote_input);
-        // console.log("fail:" + this.error_vote_input);
       })
     },
 
@@ -317,12 +337,12 @@ export default {
           const newDiv = this.createErrorDiv(errorMsgId, message);
           parentDiv.appendChild(newDiv);
           this.errors.push(message);
-        } else {
-          input.classList.remove('is-invalid');
-          if (errorDiv) {
-            errorDiv.remove();
-            this.errors.splice(this.errors.indexOf(message), 1);
-          }
+        }
+      } else {
+        input.classList.remove('is-invalid');
+        if (errorDiv) {
+          errorDiv.remove();
+          this.errors.splice(this.errors.indexOf(message), 1);
         }
       }
     },
