@@ -1,6 +1,6 @@
 <template>
   <div class="single-doctor-section py-5">
-    <!-- Drawer -->
+    <!-- Drawer message -->
     <v-card>
       <v-layout>
         <v-navigation-drawer
@@ -22,7 +22,7 @@
               type="text"
               name="name"
               class="mb-3 form-control"
-              placeholder="Nome"
+              placeholder="Nome*"
               maxlength="255"
               required
             />
@@ -32,7 +32,7 @@
               type="text"
               name="surname"
               class="mb-3 form-control"
-              placeholder="Cognome"
+              placeholder="Cognome*"
               maxlength="255"
               required
             />
@@ -42,7 +42,7 @@
               type="email"
               name="email"
               class="mb-3 form-control"
-              placeholder="Email"
+              placeholder="Email*"
               maxlength="255"
               required
             />
@@ -75,6 +75,62 @@
         </v-navigation-drawer>
       </v-layout>
     </v-card>
+    <!-- Drawer review -->
+    <v-card>
+      <v-layout>
+        <v-navigation-drawer
+          v-model="drawer_review"
+          location="right"
+          width="600"
+          temporary
+        >
+          <div class="d-flex align-items-center drawer-header">
+            <h4 class="py-3 ps-2">
+              Dr. {{ doctor.user.name }} {{ doctor.user.last_name }}
+            </h4>
+            <i class="fa-solid fa-xmark" @click="drawer_review = false"></i>
+          </div>
+          <form @submit.prevent="submitReview" class="mt-2 ms-1">
+            <input
+              id="name"
+              v-model="review_name"
+              type="text"
+              name="name"
+              class="mb-3 form-control"
+              placeholder="Nome*"
+              maxlength="255"
+              required
+            />
+            <input
+              id="email"
+              v-model="review_email"
+              type="email"
+              name="email"
+              class="mb-3 form-control"
+              placeholder="Email*"
+              maxlength="255"
+              required
+            />
+            <textarea
+              class="mt-3 px-2 py-1"
+              name="message"
+              id="message"
+              cols="75"
+              rows="10"
+              placeholder="Scrivi la tua recensione..."
+              v-model="review_text"
+              required
+            ></textarea>
+            <div class="d-flex gap-2 ms-2 mt-3">
+              <button class="btn btn-light send-message px-5" type="submit">
+                Invia
+              </button>
+              <button class="btn btn-warning px-5" type="reset">Resetta</button>
+            </div>
+          </form>
+        </v-navigation-drawer>
+      </v-layout>
+    </v-card>
     <div class="container">
       <div class="row">
         <div v-if="this.feedback"
@@ -83,6 +139,13 @@
         >
             <h4 class="alert-heading">Il tuo messaggio è stato inviato con successo!</h4>
             <i class="fa-solid fa-xmark" @click="this.feedback = false"></i>
+        </div>
+        <div v-if="this.feedback_review"
+            class="alert alert-primary text-center" 
+            role="alert"
+        >
+            <h4 class="alert-heading">La tua recensione è stato inviata con successo!</h4>
+            <i class="fa-solid fa-xmark" @click="this.feedback_review = false"></i>
         </div>
         <div v-if="this.success_vote_input"
             class="alert alert-primary text-center" 
@@ -132,13 +195,13 @@
                 class="btn btn-light send-message mt-5 me-3"
               >
                 <i class="fa-regular fa-comment-dots"></i>
-                <span class="ms-2" @click="drawer = !drawer"
+                <span class="ms-2" @click="drawer = !drawer, this.drawer_review = false"
                   >Invia un messaggio</span
                 >
               </button>
               <button type="button" class="btn btn-light send-message mt-5">
                 <i class="fa-solid fa-pen-to-square"></i>
-                <span class="ms-2">Lascia una recensione</span>
+                <span class="ms-2" @click="drawer_review = !drawer_review, this.drawer = false">Lascia una recensione</span>
               </button>
 
               <div class="mt-4 d-flex vote-section align-baseline">
@@ -171,12 +234,17 @@ export default {
       doctor: {},
       store,
       drawer: null,
+      drawer_review: false,
       message: "",
       name: "",
       surname: "",
       telephone: "",
       email: "",
+      review_email:"",
+      review_text: "",
+      review_name: "",
       feedback:false,
+      feedback_review:false,
       vote_input: '',
       error_vote_input: false,
       success_vote_input: false,
@@ -236,6 +304,29 @@ export default {
           console.log('success');
           this.drawer=null;
           this.feedback=true;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    submitReview() {
+      const formData = {
+        body: this.review_text,
+        name: this.review_name,
+        email: this.review_email,
+        profile_id: this.doctor.id,
+      };
+      console.log(formData)
+      axios
+        .post(this.store.apiBaseUrl + "/reviews", formData)
+        .then((response) => {
+          console.log(response.data);
+          this.review_message = "";
+          this.review_name = "",
+          this.review_email = "";
+          console.log('success review');
+          this.drawer_review=null;
+          this.feedback_review=true;
         })
         .catch((error) => {
           console.log(error);
