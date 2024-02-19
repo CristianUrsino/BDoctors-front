@@ -19,6 +19,20 @@ a {
     background-color: $honolulu-blue;
 }
 
+//loader
+.loader {
+    border: 16px solid #f3f3f3;
+    border-top: 16px solid #3498db;
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    animation: spin 2s linear infinite;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
 .btn:hover {
     background-color: $contrast-color;
     border-color: $green-color;
@@ -65,4 +79,27 @@ footer {
         color: $pacific-cyan;
         font-weight: 700;
     }
+}
+
+//animations
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+//vue transition
+.v-enter-active,
+.v-leave-active {
+    transition: opacity 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+    opacity: 0;
 }

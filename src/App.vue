@@ -1,20 +1,23 @@
 <template>
-  <div v-if="store.loading">
-    <div class="vh-100 my-bg-primary">
-      caricamento...
+  <Transition>
+    <div v-if="store.loading || timeLanding">
+      <div class="vh-100 my-bg-primary ">
+        <div class="loader"></div>
+
+      </div>
     </div>
-  </div>
-  <div v-else>
-    <AppNav />
+    <div v-else>
+      <AppNav />
 
 
-    <div>
-      <router-view></router-view>
+      <div>
+        <router-view></router-view>
+      </div>
+
+      <AppFooter />
+
     </div>
-
-    <AppFooter />
-
-  </div>
+  </Transition>
 </template>
 
 <script>
@@ -31,6 +34,7 @@ export default {
   data() {
     return {
       store,
+      timeLanding: true
 
     }
   },
@@ -69,9 +73,19 @@ export default {
         this.store.loading = false;
       });
     },
+    landingPageTime() {
+      setTimeout(this.landingEnd, 1800);
+
+
+    },
+    landingEnd() {
+      this.timeLanding = false;
+    }
+
   },
   created() {
     this.getAllDoctors();
+    this.landingPageTime();
   }
 }
 </script>
