@@ -4,11 +4,14 @@
     <v-card>
       <v-layout>
         <v-navigation-drawer v-model="drawer" location="right" width="600" temporary>
-          <div class="d-flex align-items-center drawer-header">
+          <div class="d-flex align-items-center justify-space-between drawer-header">
             <h4 class="py-3 ps-2">
               Dr. {{ doctor.user.name }} {{ doctor.user.last_name }}
             </h4>
-            <i class="fa-solid fa-xmark" @click="drawer = false"></i>
+            <button class="btn">
+              <i class="fa-solid fa-xmark" @click="drawer = false"></i>
+            </button>
+
           </div>
           <form @submit.prevent="submitForm('send-message')" class="mt-2 ms-1">
             <div class="mb-3">
@@ -50,25 +53,37 @@
     <v-card>
       <v-layout>
         <v-navigation-drawer v-model="drawer_review" location="right" width="600" temporary>
-          <div class="d-flex align-items-center drawer-header">
+          <div class="d-flex align-items-center justify-content-between drawer-header">
             <h4 class="py-3 ps-2">
               Dr. {{ doctor.user.name }} {{ doctor.user.last_name }}
             </h4>
-            <i class="fa-solid fa-xmark" @click="drawer_review = false"></i>
+            <button class="btn">
+              <i class="fa-solid fa-xmark" @click="drawer_review = false"></i>
+            </button>
+
           </div>
           <form @submit.prevent="submitForm('send-review')" class="mt-2 ms-1">
             <div class="mb-3">
+              <label class="form-label" for="name-review">Nome:*</label>
               <input id="name-review" v-model="review_name" type="text" name="name" class="form-control"
                 placeholder="Nome*" maxlength="255" @blur="errorsDetector('name-review')" />
             </div>
 
             <div class="mb-3">
+              <label class="form-label" for="email-review">Email:*</label>
               <input id="email-review" v-model="review_email" type="email" name="email" class="form-control"
                 placeholder="Email*" maxlength="255" @blur="errorsDetector('email-review')" />
             </div>
-
+            <!--Titolo -->
             <div class="mb-3">
-              <textarea class="px-2 py-1" name="message" id="message-review" cols="75" rows="10"
+              <label class="form-label" for="title-review">Titolo:*</label>
+              <input id="title-review" v-model="review_title" type="text" name="title" class="form-control"
+                placeholder="Titolo" maxlength="255" @blur="errorsDetector('title-review')" />
+            </div>
+            <!-- Recensione-->
+            <div class="mb-3">
+              <label class="form-label" for="message-review">Recensione:*</label>
+              <textarea class="px-2 py-1 form-control" name="message" id="message-review" cols="75" rows="10"
                 placeholder="Scrivi la tua recensione..." v-model="review_text"
                 @blur="errorsDetector('message-review')"></textarea>
             </div>
@@ -77,7 +92,7 @@
                 Invia
               </button>
               <button id="send-review" class="btn btn-warning px-5" type="reset"
-                @click="resetErrors('send-review')">Resetta</button>
+                @click="resetErrors('send-review')">Reset</button>
             </div>
           </form>
         </v-navigation-drawer>
@@ -98,14 +113,14 @@
           <i class="fa-solid fa-xmark" @click="this.success_vote_input = false"></i>
         </div>
         <div class="col-12">
-          <div class="single-doctor-card bg-white p-4 d-flex">
-            <div class="doctor-img">
+          <div class="single-doctor-card bg-white py-4 row ">
+            <div class="doctor-img col-10 col-md-6">
               <img :src="doctor.image
                 ? store.imagesBaseUrl + doctor.image
                 : '/images/avatar_doctor.jpg'
                 " :alt="doctor.user.last_name" />
             </div>
-            <div class="doctor-info px-4">
+            <div class="doctor-info px-4 col-12 col-md-8 col-lg-6">
               <div class="d-flex align-items-center">
                 <h2>Dr. {{ doctor.user.name }} {{ doctor.user.last_name }}</h2>
                 <i class="fa-solid fa-circle-check ms-2"></i>
@@ -122,6 +137,26 @@
                   <u>{{ doctor.votes.length }} voti</u>
                 </span>
               </div>
+              <!-- Sezione voto -->
+              <div class="container-fluid">
+                <div class="mt-4 row vote-section align-baseline">
+                  <div class="col-12 p-0 col-md-6 col-lg-4">
+                    <select v-model="vote_input" id="vote" class="form-select" name="vote">
+                      <option value="" selected>Seleziona voto</option>
+                      <option v-for="n in 5" :key="n" :value="n">{{ n }}</option>
+                    </select>
+                  </div>
+                  <div class="col-auto">
+                    <button type="button" class="btn btn-light" @click="sendVote">
+                      <i class="fa-solid fa-star h6"></i>
+                      <span class="ms-2">Invia voto</span>
+                    </button>
+                  </div>
+
+
+                  <div v-if="error_vote_input" class="text-danger">errore nell'invio del voto</div>
+                </div>
+              </div>
               <button type="button" class="btn btn-light send-message mt-5 me-3">
                 <i class="fa-regular fa-comment-dots"></i>
                 <span class="ms-2" @click="drawer = !drawer, this.drawer_review = false">Invia un messaggio</span>
@@ -131,17 +166,9 @@
                 <span class="ms-2" @click="drawer_review = !drawer_review, this.drawer = false">Lascia una
                   recensione</span>
               </button>
-              <div class="mt-4 d-flex vote-section align-baseline">
-                <select v-model="vote_input" id="vote" class="form-select " name="vote">
-                  <option value="" selected>Seleziona voto</option>
-                  <option v-for="n in 5" :key="n" :value="n">{{ n }}</option>
-                </select>
-                <button type="button" class="btn btn-light" @click="sendVote">
-                  <i class="fa-solid fa-star h6"></i>
-                  <span class="ms-2">Invia voto</span>
-                </button>
-              </div>
-              <div v-if="error_vote_input" class="text-danger">errore nell'invio del voto</div>
+
+
+
             </div>
           </div>
         </div>
@@ -342,6 +369,7 @@ export default {
           break;
         case 'telephone':
           isValid = value !== '' && value.length >= 10;
+          //il campo telefono non è obbligatorio
           message = (value !== '') ? 'Numero di telefono non valido' : 'Il campo è obbligatorio'
           break;
         case 'message-review':
@@ -409,15 +437,15 @@ export default {
         data = formDataMessage;
         this.message = "";
         this.name = "",
-        this.surname = "",
-        this.telephone = "",
-        this.email = "";
+          this.surname = "",
+          this.telephone = "",
+          this.email = "";
       }
       else if (type === 'send-review') {
         data = formDataReview;
         this.review_message = "";
         this.review_name = "",
-        this.review_email = "";
+          this.review_email = "";
       }
       data.forEach(item => {
         const input = document.getElementById(item);
@@ -574,32 +602,32 @@ export default {
         color: rgb(80, 78, 78);
       }
 
-      .vote-section {
-        select {
-          width: 47%;
-          margin-right: 10px
-        }
+      //       .vote-section {
+      //         select {
+      //           width: 47%;
+      //           margin-right: 10px
+      //         }
 
-        button {
-          width: 50%;
-          height: 40px;
+      //         button {
+      //           width: 50%;
+      //           height: 40px;
 
-          .fa-star {
-            color: black;
-          }
-        }
+      //           .fa-star {
+      //             color: black;
+      //           }
+      //         }
 
-        button:hover {
-          cursor: pointer;
-          color: white;
+      //         button:hover {
+      //           cursor: pointer;
+      //           color: white;
 
-          .fa-star {
-            color: white;
-          }
+      //           .fa-star {
+      //             color: white;
+      //           }
 
-          border: none;
-        }
-      }
+      //           border: none;
+      //         }
+      //       }
     }
   }
 }
