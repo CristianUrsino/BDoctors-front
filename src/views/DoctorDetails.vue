@@ -238,6 +238,10 @@ export default {
 
         sendVote(){
             // console.log(this.vote_input);
+            if(this.vote_input === '' || this.vote_input === null || this.vote_input > 5){
+                this.error_vote_input = true;
+                return
+            }
             this.success_vote_input = false;
             this.error_vote_input = false;
             const formData = {
