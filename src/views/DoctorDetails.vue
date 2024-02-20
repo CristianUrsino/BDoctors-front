@@ -157,7 +157,7 @@
                     </select>
                   </div>
                   <div class="col-auto">
-                    <button type="button" class="btn btn-light" @click="sendVote">
+                    <button type="button" class="btn btn-light" @click="sendVote(), this.drawer=false, this.drawer_review=false">
                       <i class="fa-solid fa-star h6"></i>
                       <span class="ms-2">Invia voto</span>
                     </button>
@@ -639,6 +639,38 @@ img {
         color: rgb(80, 78, 78);
       }
 
+      .loader {
+    border: 16px solid #f3f3f3;
+    border-top: 16px solid #3498db;
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    animation: spin 2s linear infinite;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .container {
+        padding-top: 180px;
+    }
+
+    .mediaq {
+        display: block !important;
+    }
+}
       // .vote-section {
       //   select {
       //     width: 47%;
