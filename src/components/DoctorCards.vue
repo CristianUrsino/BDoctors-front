@@ -15,9 +15,11 @@
             </div>
             
         </div>
-            <div class="pt-3 pb-3 text-center">
-                <i class="fa-solid fa-plus fs-1 text-center" style="color: #74C0FC;"></i>
-            </div>
+        <div class="d-flex justify-content-center">
+            <router-link class="btn detail-btn text-uppercase text-center"
+                :to="{ name: 'DoctorDetail', params: { slug: slg } }"> Mostra dettagli
+            </router-link>
+        </div>
     </div>
 </template>
 
@@ -30,6 +32,7 @@
             "specialty",
             "image",
             "address",
+            "slg",
         ],
         data(){
             return{
@@ -43,6 +46,16 @@
 @import "@/assets/styles/partials/_variables.scss";
 h5{
     margin:0
+}
+.detail-btn {
+    color: $honolulu-blue;
+    font-weight: 500;
+    font-size: 0.9em;
+    padding-top: 7px;
+}
+.detail-btn:hover {
+    background-color: rgb(245, 255, 249);
+    border: 1px solid white
 }
 .fa-solid.fa-circle-check{
             color:$honolulu-blue
