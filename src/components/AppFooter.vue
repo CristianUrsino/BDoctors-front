@@ -1,9 +1,9 @@
 <template>
   <footer class="py-5">
     <div class="top-footer container py-3 mb-2">
-      <div class="row flex-wrap justify-content-between">
-        <div class="col-12 col-md-8 col-lg-6 row  gap-5">
-          <div class=" col-4 col-md-2 d-flex flex-column">
+      <div class="row justify-content-between">
+        <div class="col-8 d-flex gap-5">
+          <div class="d-flex flex-column">
             <h3 class="">Servizi</h3>
             <ul>
               <li><a href="#">Chi Siamo</a></li>
@@ -14,26 +14,32 @@
               <li><a href="#">FAQ</a></li>
             </ul>
           </div>
-          <div class=" col-4 col-md-2 d-flex flex-column">
+          <div>
             <h3>Trova il tuo medico</h3>
             <div class="d-flex justify-content-between gap-5">
               <div class="d-flex flex-column">
                 <ul>
-                  <li v-for="specialty in specialties.slice(0, 6)" :key="specialty">
+                  <li
+                    v-for="specialty in specialties.slice(0, 6)"
+                    :key="specialty">
                     <a href="#">{{ specialty }}</a>
                   </li>
                 </ul>
               </div>
               <div class="d-flex flex-column">
                 <ul>
-                  <li v-for="specialty in specialties.slice(6, 12)" :key="specialty">
+                  <li
+                    v-for="specialty in specialties.slice(6, 12)"
+                    :key="specialty">
                     <a href="#">{{ specialty }}</a>
                   </li>
                 </ul>
               </div>
               <div class="d-flex flex-column">
                 <ul>
-                  <li v-for="specialty in specialties.slice(12, 18)" :key="specialty">
+                  <li
+                    v-for="specialty in specialties.slice(12, 18)"
+                    :key="specialty">
                     <a href="#">{{ specialty }}</a>
                   </li>
                 </ul>
@@ -41,20 +47,20 @@
             </div>
           </div>
         </div>
-        <div class="col-12 col-md-6 col-lg-4 d-flex flex-column align-items-center">
-          <div class="logo-wrapper">
-            <img class="footer-logo border-rounded" src="/images/bdoctors1.jpg" alt="logo">
-          </div>
-          <div class="info-brand mt-3">
-            <span class="d-block"><em>Viale del Policlinico, 155</em></span>
-            <span><em>00196 Roma (RM), Italia</em></span>
-          </div>
-          <div class="d-flex mt-2 gap-3 social-icons">
-            <i class="fa-brands fa-facebook"></i>
-            <i class="fa-brands fa-twitter"></i>
-            <i class="fa-brands fa-instagram"></i>
-            <i class="fa-brands fa-linkedin"></i>
-          </div>
+        <div class="col-4 d-flex flex-column align-items-center">
+            <div class="logo-wrapper">
+                <img class="footer-logo border-rounded" src="/images/bdoctors1.jpg" alt="logo">
+            </div>
+            <div class="info-brand mt-3">
+              <span class="d-block"><em>Viale del Policlinico, 155</em></span>
+              <span><em>00196 Roma (RM), Italia</em></span>
+            </div>
+            <div class="d-flex mt-2 gap-3 social-icons">
+                <i class="fa-brands fa-facebook"></i>
+                <i class="fa-brands fa-twitter"></i>
+                <i class="fa-brands fa-instagram"></i>
+                <i class="fa-brands fa-linkedin"></i>
+            </div>
         </div>
       </div>
     </div>
@@ -107,59 +113,49 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.social-icons {
-  i {
-    font-size: 1.3em;
-    transition: 0, 5s;
+.social-icons{
+  i{
+    font-size:1.3em;
+    transition: 0,5s;
   }
-
-  i:hover {
-    cursor: pointer;
-    transition: 0, 5s;
+  i:hover{
+    cursor:pointer;
+    transition: 0,5s;
     transform: scale(1.2)
   }
 }
-
-.border-rounded {
-  border-radius: 25px;
-  overflow: hidden;
-}
-
-footer {
-  .logo-wrapper {
-    width: 100px;
-    height: 100px;
+.border-rounded{
+    border-radius: 25px;
     overflow: hidden;
-
-    .footer-logo {
-      width: 100%;
-      height: 100%;
+}
+footer {
+   .logo-wrapper{
+        width:100px;
+        height:100px;
+        overflow:hidden;
+        .footer-logo{
+        width: 100%;
+        height:100%;
 
     }
-  }
-
+    } 
   p {
     margin: 0;
   }
-
   ul {
     padding: 0;
-
     li {
       list-style: none;
-
       a {
         text-decoration: none;
         color: white;
       }
-
       a:hover {
         color: rgb(224, 221, 221);
         transition: 0, 5s;
       }
     }
   }
-
   h3 {
     font-size: 1.3em;
     font-weight: 700;
