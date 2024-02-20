@@ -34,7 +34,7 @@
 
             <div class="mb-3">
               <label class="form-label" for="telephone">Telefono:</label>
-              <input id="telephone" v-model="telephone" type="text" name="telephone" class="form-control"
+              <input id="telephone" v-model="telephone" type="number" name="telephone" class="form-control"
                 placeholder="Tel." maxlength="13" />
             </div>
 
@@ -149,7 +149,7 @@
               </div>
               <!-- Sezione voto -->
               <div class="container-fluid">
-                <div class="mt-4 row vote-section align-baseline">
+                <div class="mt-4 row vote-section align-items-center">
                   <div class="col-12 p-0 col-md-6 col-lg-4">
                     <select v-model="vote_input" id="vote" class="form-select" name="vote">
                       <option value="" selected>Seleziona voto</option>
@@ -169,16 +169,13 @@
               </div>
               <button type="button" class="btn btn-light send-message mt-5 me-3">
                 <i class="fa-regular fa-comment-dots"></i>
-                <span class="ms-2" @click="drawer = !drawer, this.drawer_review = false">Invia un messaggio</span>
+                <span class="ms-2" @click="drawer = !drawer, this.drawer_review = false, this.feedback = false, this.feedback_review = false, this.success_vote_input = false">Invia un messaggio</span>
               </button>
               <button type="button" class="btn btn-light send-message mt-5">
                 <i class="fa-solid fa-pen-to-square"></i>
-                <span class="ms-2" @click="drawer_review = !drawer_review, this.drawer = false">Lascia una
+                <span class="ms-2" @click="drawer_review = !drawer_review, this.drawer = false, this.feedback = false, this.feedback_review = false, this.success_vote_input = false">Lascia una
                   recensione</span>
               </button>
-
-
-
             </div>
           </div>
         </div>
@@ -251,7 +248,7 @@ export default {
         message: this.message,
         name: this.name,
         surname: this.surname,
-        //tel: this.telephone.toString(),
+        tel: this.telephone.toString(),
         email: this.email,
         profile_id: this.doctor.id,
       };
@@ -484,7 +481,9 @@ export default {
 
 <style lang="scss" scoped>
 @import "@/assets/styles/partials/_variables.scss";
-
+.h6{
+  margin-bottom: 0;
+}
 img {
   width: 100%;
 }
