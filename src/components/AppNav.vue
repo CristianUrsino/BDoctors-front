@@ -16,8 +16,10 @@
       <!--menu content-->
       <div class="nav-content" :class="this.showMobileMenu ? 'open-menu' : 'closed-menu'">
         <!--logo-->
-        <div class="border-rounded">
-          <img class="hidden " src="/images/bdoctors1.jpg" alt="">
+        <div class="nav-logo">
+          <div class="border-rounded logo-img-wrapper">
+            <img class="hidden " src="/images/bdoctors1.jpg" alt="">
+          </div>
         </div>
 
         <ul class="nav-items text-uppercase">
@@ -28,8 +30,14 @@
 
         </ul>
 
-        <button type="button" class="btn btn-light"><a href="http://127.0.0.1:8000/login" target="_blank"
-            rel="noopener noreferrer">Login</a></button>
+        <div class="d-flex gap-2">
+          <button type="button" class="btn btn-light"><a href="http://127.0.0.1:8000/login" target="_blank"
+            rel="noopener noreferrer">Login</a>
+          </button>
+          <button type="button" class="btn btn-light"><a href="http://127.0.0.1:8000/register" target="_blank"
+          rel="noopener noreferrer">Registrati</a>
+          </button>
+        </div>
       </div>
     </div>
   </header>
@@ -56,6 +64,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.logo-img-wrapper{
+  width:110px
+}
+.nav-logo{
+  width:220px
+}
 .logo {
   display: none;
 }

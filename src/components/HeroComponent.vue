@@ -2,17 +2,17 @@
     <div class="myhero-bg pt-5">
         <div class="container my-margin">
             <h1 class="text-white">Prenota la tua visita online</h1>
-            <div class="d-flex flex-wrap justify-content-between align-items-center">
-                <div class="w-50">
+            <div class="d-flex flex-wrap justify-content-between">
+                <div class="w-50 profession-search">
                     <select v-model="selectedProfession" @change="fetchProfessions" class="form-select mb-4"
                         aria-label="Profession Select">
                         <option disabled value="">Cosa Cerchi?</option>
                         <option v-for="profession in store.specialties" :key="profession.id" :value="profession.id">{{
                             profession.name }}</option>
                     </select>
-                    <select v-model="selectedCity" class="form-select mb-4" aria-label="City Select">
+                    <!-- <select v-model="selectedCity" class="form-select mb-4" aria-label="City Select">
                         <option value="Lombardia" selected>Lombardia</option>
-                    </select>
+                    </select> -->
                     <button @click="redirectToLink(selectedProfession)" class="btn btn-light">Cerca</button>
                 </div>
                 <div class="w-50">
@@ -34,7 +34,7 @@ export default {
     data() {
         return {
             selectedProfession: '',
-            selectedCity: 'Lombardia',
+            /* selectedCity: 'Lombardia', */
             carouselItems: [
                 { src: '/images/dottore1.png' },
                 { src: '/images/dottore2.png' },
@@ -71,6 +71,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.profession-search{
+    margin-top: 120px
+}
 .myhero-bg {
     background-color: #0077b6ff;
 }

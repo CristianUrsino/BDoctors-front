@@ -1,8 +1,8 @@
 <template>
     <div class="container">
         <h1 class="my-4">Cerca il tuo specialista</h1>
-        <div class="d-flex flex-wrap align-items-end gap-2 mediaq mb-4">
-            <div class=" mt-4 col-12 col-md-6 col-lg-4">
+        <div class="d-flex flex-wrap align-items-end justify-content-between mediaq">
+            <div class=" mt-4 col-12 col-md-6 col-lg-3">
                 <label for="professionSelect">Selezione Professione:</label>
                 <select class="form-select " id="professionSelect" v-model="selectedProfession">
                     <option value="">Tutte le professioni</option>
@@ -11,15 +11,15 @@
                     }}</option>
                 </select>
             </div>
-            <div class="mt-4 col-12 col-md-6 col-lg-4">
+            <div class="mt-4 col-12 col-md-6 col-lg-3">
                 <label for="ratingSelect">Seleziona voto:</label>
                 <select class="form-select" id="ratingSelect" v-model="selectedRating">
                     <option value="">Tutti i voti</option>
                     <option v-for="rating in ratings" :key="rating" :value="rating">{{ rating }}</option>
                 </select>
             </div>
-            <div>
-                <input type="text" v-model="searchName" placeholder="Cerca per nome">
+            <div class="d-flex mt-4 col-12 col-md-6 col-lg-3">
+                <input type="text" class="form-control" v-model="searchName" placeholder="Cerca per nome">
                 <button class="btn btn-search" @click="searchDoctor">Cerca</button>
             </div>
 
@@ -27,9 +27,8 @@
 
 
             <div class="loader" v-if="loading"></div>
-
-
         </div>
+        <span class="results-number mt-1 mb-4 d-block">Risultati({{ doctors.length }})</span>
         <div class="row mb-5">
             <div class="col-md-4 col-12  mb-5 mt-5" v-for="doctor in doctors" :key="doctor.id">
                 <v-card class="mx-auto" max-width="344" :title="doctor.user.name + ' ' + doctor.user.last_name"
@@ -190,6 +189,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.results-number{
+    font-size: 0.9em;
+}
 img {
     width: 100%;
 }

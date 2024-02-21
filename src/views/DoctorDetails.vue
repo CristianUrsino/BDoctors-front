@@ -5,15 +5,15 @@
       <v-layout>
         <v-navigation-drawer v-model="drawer" location="right" width="600" temporary>
           <div class="d-flex align-items-center justify-space-between drawer-header">
-            <h4 class="py-3 ps-2">
+            <h4 class="pt-3 ps-2">
               Dr. {{ doctor.user.name }} {{ doctor.user.last_name }}
             </h4>
             <button class="btn">
               <i class="fa-solid fa-xmark" @click="drawer = false"></i>
             </button>
-
           </div>
-          <form @submit.prevent="submitForm('send-message')" class="mt-2 ms-1">
+          <h6 class="ps-2">Messaggio</h6>
+          <form @submit.prevent="submitForm('send-message')" class="mt-3 mx-2">
             <div class="mb-3">
               <label class="form-label" for="name">Nome:*</label>
               <input id="name" v-model="name" class="form-control" type="text" name="name" placeholder="Nome*"
@@ -45,10 +45,10 @@
             </div>
 
             <div class="d-flex gap-2 ms-2 mt-3">
-              <button id="send-message" class="btn btn-light send-message px-5" type="submit">
+              <button id="send-message" class="btn px-5" type="submit">
                 Invia
               </button>
-              <button class="btn btn-warning px-5" type="reset" @click="resetErrors('send-message')">Reset</button>
+              <button class="btn reset-btn px-5" type="reset" @click="resetErrors('send-message')">Reset</button>
             </div>
           </form>
         </v-navigation-drawer>
@@ -59,15 +59,15 @@
       <v-layout>
         <v-navigation-drawer v-model="drawer_review" location="right" width="600" temporary>
           <div class="d-flex align-items-center justify-content-between drawer-header">
-            <h4 class="py-3 ps-2">
+            <h4 class="pt-3 ps-2">
               Dr. {{ doctor.user.name }} {{ doctor.user.last_name }}
             </h4>
             <button class="btn">
               <i class="fa-solid fa-xmark" @click="drawer_review = false"></i>
             </button>
-
           </div>
-          <form @submit.prevent="submitForm('send-review')" class="mt-2 ms-1">
+          <h6 class="ps-2">Recensione</h6>
+          <form @submit.prevent="submitForm('send-review')" class="mt-3 mx-2">
             <div class="mb-3">
               <label class="form-label" for="name-review">Nome:*</label>
               <input id="name-review" v-model="review_name" type="text" name="name" class="form-control"
@@ -93,10 +93,10 @@
                 @blur="errorsDetector('message-review')"></textarea>
             </div>
             <div class="d-flex gap-2 ms-2 mt-3">
-              <button id="send-message" class="btn btn-light send-message px-5" type="submit">
+              <button id="send-review" class="btn px-5" type="submit">
                 Invia
               </button>
-              <button id="send-review" class="btn btn-warning px-5" type="reset"
+              <button class="btn reset-btn px-5" type="reset"
                 @click="resetErrors('send-review')">Reset</button>
             </div>
           </form>
@@ -133,7 +133,7 @@
             <div class="doctor-info px-4 col-12 col-md-8 col-lg-6">
               <div class="d-flex align-items-center">
                 <h2>Dr. {{ doctor.user.name }} {{ doctor.user.last_name }}</h2>
-                <i class="fa-solid fa-circle-check ms-2"></i>
+                <i v-if="doctor.sponsorships.length > 0" class="fa-solid fa-circle-check ms-2"></i>
               </div>
               <span class="speciaties d-block mb-1">{{ doctor.specialties[0].name }}</span>
               <span class="address">{{ doctor.address }}</span>
@@ -481,7 +481,23 @@ export default {
 
 <style lang="scss" scoped>
 @import "@/assets/styles/partials/_variables.scss";
-.h6{
+.reset-btn{
+  border: 1px solid #ffc720;
+  background-color:#ffca2c
+}
+.reset-btn:hover{
+  background-color:#ffca29;
+  border-color:#ffc720;
+}
+#send-review, #send-message{
+  background-color: $honolulu-blue;
+  color:white
+}
+#send-review:hover,#send-message:hover{
+  background-color: $contrast-color;
+  border-color: #4bb8a9;
+}
+.h6, .h4{
   margin-bottom: 0;
 }
 img {
@@ -546,9 +562,12 @@ img {
     }
   }
 
+  #send-message {
+    background-color:$honolulu-blue;
+  }
   .send-message {
     border: 1px solid rgb(238, 238, 238);
-    padding: 10px 10px;
+    padding: 10px 10px; 
   }
 
   .single-doctor-section {
