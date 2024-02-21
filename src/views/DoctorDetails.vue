@@ -497,7 +497,7 @@ export default {
   background-color: $contrast-color;
   border-color: #4bb8a9;
 }
-.h6 .h4{
+.h6, .h4{
   margin-bottom: 0;
 }
 img {
