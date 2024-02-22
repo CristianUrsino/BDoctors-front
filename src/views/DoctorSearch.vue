@@ -112,15 +112,29 @@ export default {
 
             axios.get(`${this.store.apiBaseUrl}/doctors`, {
                 params: {
-                order_by_sponsorship_duration: true, 
-                order_by_duration: true,
+                
+                
                 specialty: this.selectedProfession,
                 min_vote_average: this.selectedRating,
                 name: this.searchName
                  }
                 })
                 .then(response => {
-                    this.doctors = response.data.results;
+                    const doctorsWithSponsorship = [];
+            const doctorsWithoutSponsorship = [];
+
+            response.data.results.forEach(doctor => {
+            if (doctor.sponsorships.length > 0) {
+                doctorsWithSponsorship.push(doctor);
+            } else {
+                doctorsWithoutSponsorship.push(doctor);
+            }
+        });
+        console.log('Doctors with sponsorship:', doctorsWithSponsorship);
+        console.log('Doctors without sponsorship:', doctorsWithoutSponsorship);
+        // Unisci i due array, mettendo prima quelli con sponsorizzazione
+        this.doctors = [...doctorsWithSponsorship, ...doctorsWithoutSponsorship];
+        console.log('Final doctors list:', this.doctors);
                 })
                 .catch(error => {
                     console.error('Error fetching doctors:', error);
@@ -159,9 +173,22 @@ export default {
                 }
             })
                 .then(response => {
-                    this.doctors = response.data.results;
+                    const doctorsWithSponsorship = [];
+                    const doctorsWithoutSponsorship = [];
+
+                    response.data.results.forEach(doctor => {
+                        if (doctor.sponsorships.length > 0) {
+                            doctorsWithSponsorship.push(doctor);
+                        } else {
+                            doctorsWithoutSponsorship.push(doctor);
+                        }
+        });
+
+                    // Unisci i due array, mettendo prima quelli con sponsorizzazione
+                    this.doctors = [...doctorsWithSponsorship, ...doctorsWithoutSponsorship];
+        
                     this.loading = false;
-                    console.log(this.doctors);
+                    console.log('Doctors after searching:', this.doctors);
 
                 })
                 .catch(error => {
@@ -196,8 +223,7 @@ export default {
         this.selectedProfession = params.get('profession') || '';
         this.selectedCity = params.get('city') || 'Lombardia';
         this.fetchDoctors();
-        // this.fetchProfessions();
-        this.searchDoctor();
+        
     }
 }
 </script>
