@@ -33,12 +33,18 @@
             <div class="col-md-4 col-12  mb-5 mt-5" v-for="doctor in doctors" :key="doctor.id">
                 <v-card class="mx-auto" max-width="344" :title="doctor.user.name + ' ' + doctor.user.last_name"
                     :subtitle="formatSpecialties(doctor.specialties)" hover link>
+                    
                     <v-avatar size="70" class="ms-5">
                         <img :src="doctor.image ? store.imagesBaseUrl + doctor.image : '/images/avatar_doctor.jpg'"
                             alt="Avatar">
                     </v-avatar>
                     <v-card-text>{{ doctor.address }} <br> Voto Medio: {{ calculateRating(doctor) }}</v-card-text>
+                    <div class="d-flex">
                     <v-card-text>Numero di Voti: {{ calculateVoteCount(doctor) }}</v-card-text>
+                        <div v-if="doctor.sponsorships.length > 0" class="sponsorship-star">
+                            <i class="fa fa-star"></i>
+                        </div>
+                    </div>
                     <v-card-actions>
                         <router-link class="btn detail-btn text-uppercase"
                             :to="{ name: 'DoctorDetail', params: { slug: doctor.slug } }"> Mostra dettagli
@@ -104,7 +110,15 @@ export default {
         },
         fetchDoctors() {
 
-            axios.get(`${this.store.apiBaseUrl}/doctors`)
+            axios.get(`${this.store.apiBaseUrl}/doctors`, {
+                params: {
+                order_by_sponsorship_duration: true, 
+                order_by_duration: true,
+                specialty: this.selectedProfession,
+                min_vote_average: this.selectedRating,
+                name: this.searchName
+                 }
+                })
                 .then(response => {
                     this.doctors = response.data.results;
                 })
@@ -214,7 +228,14 @@ img {
     background-color: rgb(245, 255, 249);
     border: 1px solid white
 }
+.sponsorship-star {
+    
+    z-index: 999; 
+}
 
+.fa-star {
+    color: yellow; 
+}
 .loader {
     border: 16px solid #f3f3f3;
     border-top: 16px solid #3498db;
