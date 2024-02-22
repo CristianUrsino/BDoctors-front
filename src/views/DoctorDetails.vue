@@ -151,10 +151,11 @@
               <div class="container-fluid">
                 <div class="mt-4 row vote-section align-items-center">
                   <div class="col-12 p-0 col-md-6 col-lg-4">
-                    <select v-model="vote_input" id="vote" class="form-select" name="vote">
-                      <option value="" selected>Seleziona voto</option>
-                      <option v-for="n in 5" :key="n" :value="n">{{ n }}</option>
-                    </select>
+                    <i class="fa-star" :class="star1" @click="setVote(1)"></i>
+                    <i class="fa-star" :class="star2" @click="setVote(2)"></i>
+                    <i class="fa-star" :class="star3" @click="setVote(3)"></i>
+                    <i class="fa-star" :class="star4" @click="setVote(4)"></i>
+                    <i class="fa-star" :class="star5" @click="setVote(5)"></i>
                   </div>
                   <div class="col-auto">
                     <button type="button" class="btn btn-light" @click="sendVote(), this.drawer=false, this.drawer_review=false">
@@ -210,6 +211,12 @@ export default {
       vote_input: '',
       error_vote_input: false,
       success_vote_input: false,
+      clickedVote: 0,
+        star1: 'fa-regular',
+        star2: 'fa-regular',
+        star3: 'fa-regular',
+        star4: 'fa-regular',
+        star5: 'fa-regular',
     };
   },
   methods: {
@@ -243,6 +250,26 @@ export default {
 
       return average.toFixed(1);
     },
+    setVote(vote) {
+        this.vote_input = vote;
+        // Imposta il numero di stelle selezionate dall'utente
+        this.clickedVote = vote;
+
+        // Imposta tutte le stelle come vuote (fa-regular) all'inizio
+        this.star1 = 'fa-regular';
+        this.star2 = 'fa-regular';
+        this.star3 = 'fa-regular';
+        this.star4 = 'fa-regular';
+        this.star5 = 'fa-regular';
+
+        // Imposta le stelle selezionate e quelle precedenti come piene (fa-solid)
+        if (vote >= 1) this.star1 = 'fa-solid';
+        if (vote >= 2) this.star2 = 'fa-solid';
+        if (vote >= 3) this.star3 = 'fa-solid';
+        if (vote >= 4) this.star4 = 'fa-solid';
+        if (vote >= 5) this.star5 = 'fa-solid';
+    },
+
     submitForm(btnId) {
       const formDataMessage = {
         message: this.message,
@@ -569,6 +596,9 @@ img {
     border: 1px solid rgb(238, 238, 238);
     padding: 10px 10px; 
   }
+  .selected-star {
+    color: black;
+}
 
   .single-doctor-section {
     background-color: white;
