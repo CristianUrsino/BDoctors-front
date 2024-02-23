@@ -30,8 +30,8 @@
 
         </ul>
 
-        <div class="d-flex gap-2">
-          <button type="button" class="btn btn-light"><a href="http://127.0.0.1:8000/login" target="_blank"
+        <div class="gap-2">
+          <button type="button" class="btn btn-light me-3"><a href="http://127.0.0.1:8000/login" target="_blank"
             rel="noopener noreferrer">Login</a>
           </button>
           <button type="button" class="btn btn-light"><a href="http://127.0.0.1:8000/register" target="_blank"
@@ -124,7 +124,16 @@ button {
 img {
   width: 110px;
 }
+@media screen and (max-width: 600px) {
+  .nav-items {
+    flex-direction: column;
+    font-size: 0.5rem; 
+  }
 
+  button {
+    margin-top: 10px;
+  }
+}
 // Mobile version - hidden hamburger menu
 @media screen and (max-width: 768px) {
   .nav-menu {
@@ -136,7 +145,7 @@ img {
 
   .open-menu {
     opacity: 1;
-    //height: 150px;
+    height: auto;
   }
 
   .closed-menu {
@@ -181,5 +190,15 @@ img {
   }
 
 
+}
+@media screen and (max-width: 375px) {
+  .nav-menu .nav-items li {
+    font-size: 1rem; 
+  }
+
+  .nav-menu button {
+    font-size: 0.8rem; 
+    padding: 5px 10px;
+  }
 }
 </style>
