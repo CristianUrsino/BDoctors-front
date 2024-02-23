@@ -177,6 +177,9 @@
                 <span class="ms-2" @click="drawer_review = !drawer_review, this.drawer = false, this.feedback = false, this.feedback_review = false, this.success_vote_input = false">Lascia una
                   recensione</span>
               </button>
+              <div class="mt-3">
+                <a v-if="doctor.curriculum" :href="'http://127.0.0.1:8000/storage/curriculums/' + doctor.id + '.pdf'" target="_blank" class="btn btn-primary">Scarica il curriculum</a>
+              </div>
             </div>
           </div>
         </div>
