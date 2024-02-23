@@ -1,5 +1,5 @@
 <template>
-    <div class="container mb-5">
+    <div class="container mb-5 mypt">
         <h1 class="text-center mb-5 mt-5 text-uppercase">{{ title }}</h1>
         <div class="row g-4">
             <div class="col-12 col-md-6 col-lg-4" v-for="member in members">
@@ -113,5 +113,8 @@ export default {
 .dnd-btn:hover {
     background-color: #4d2c18;
     border-color: #4d2c18;
+}
+.mypt{
+    padding-top: 80px
 }
 </style>
