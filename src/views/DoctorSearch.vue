@@ -23,7 +23,7 @@
                 <button class="btn btn-search" @click="searchDoctor">Cerca</button>
             </div>
 
-            <button class="btn btn-primary" @click="orderByVotes">Ordina per numero di voti</button>
+            <button class="btn btn-primary" @click="orderByVotes">Ordina per numero di recensioni</button>
 
 
             <div class="loader" v-if="loading"></div>
@@ -31,14 +31,15 @@
         <span class="results-number mt-1 mb-4 d-block">Risultati({{ doctors.length }})</span>
         <div class="row mb-5">
             <div class="col-md-4 col-12  mb-5 mt-5" v-for="doctor in doctors" :key="doctor.id">
+                <router-link :to="{ name: 'DoctorDetail', params: { slug: doctor.slug } }" class="card-link">
                 <v-card class="mx-auto" max-width="344" :title="doctor.user.name + ' ' + doctor.user.last_name"
                     :subtitle="formatSpecialties(doctor.specialties)" hover link>
-                    
+                    <router-link :to="{ name: 'DoctorDetail', params: { slug: doctor.slug } }"></router-link>
                     <v-avatar size="70" class="ms-5">
                         <img :src="doctor.image ? store.imagesBaseUrl + doctor.image : '/images/avatar_doctor.jpg'"
                             alt="Avatar">
                     </v-avatar>
-                    <v-card-text>{{ doctor.address }} <br> Voto Medio: {{ calculateRating(doctor) }}</v-card-text>
+                    <v-card-text>{{ doctor.address }} <br> Voto Medio: {{ calculateRating(doctor) }} <br> Numero di Recensioni: {{ doctor.reviews.length }}</v-card-text>
                     <div class="d-flex">
                     <v-card-text>Numero di Voti: {{ calculateVoteCount(doctor) }}</v-card-text>
                         <div v-if="doctor.sponsorships.length > 0" class="sponsorship-star">
@@ -70,8 +71,11 @@
                             </v-card-actions>
                         </v-card>
                     </v-expand-transition>
+                    
                 </v-card>
+                </router-link>
             </div>
+            
         </div>
     </div>
 </template>
@@ -200,9 +204,9 @@ export default {
 
             axios.get(`${this.store.apiBaseUrl}/doctors`, {
                 params: {
-                    order_by_votes: true,
+                    order_by_reviews: true,
                     specialty: this.selectedProfession,
-                    min_vote_average: this.selectedRating,
+                    min_review_average: this.selectedRating,
                     name: this.searchName
 
                 }
