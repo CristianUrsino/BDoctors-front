@@ -32,49 +32,50 @@
         <div class="row mb-5">
             <div class="col-md-4 col-12  mb-5 mt-5" v-for="doctor in doctors" :key="doctor.id">
                 <router-link :to="{ name: 'DoctorDetail', params: { slug: doctor.slug } }" class="card-link">
-                <v-card class="mx-auto" max-width="344" :title="doctor.user.name + ' ' + doctor.user.last_name"
-                    :subtitle="formatSpecialties(doctor.specialties)" hover link>
-                    <router-link :to="{ name: 'DoctorDetail', params: { slug: doctor.slug } }"></router-link>
-                    <v-avatar size="70" class="ms-5">
-                        <img :src="store.imagesBaseUrl + doctor.image" @error="setDefaultImage" alt="Avatar">
-                    </v-avatar>
-                    <v-card-text>{{ doctor.address }} <br> Voto Medio: {{ calculateRating(doctor) }} <br> Numero di Recensioni: {{ doctor.reviews.length }}</v-card-text>
-                    <div class="d-flex">
-                    <v-card-text>Numero di Voti: {{ calculateVoteCount(doctor) }}</v-card-text>
-                        <div v-if="doctor.sponsorships.length > 0" class="sponsorship-star">
-                            <i class="fa fa-star"></i>
+                    <v-card class="mx-auto" max-width="344" :title="doctor.user.name + ' ' + doctor.user.last_name"
+                        :subtitle="formatSpecialties(doctor.specialties)" hover link>
+                        <router-link :to="{ name: 'DoctorDetail', params: { slug: doctor.slug } }"></router-link>
+                        <v-avatar size="70" class="ms-5">
+                            <img :src="store.imagesBaseUrl + doctor.image" @error="setDefaultImage" alt="Avatar">
+                        </v-avatar>
+                        <v-card-text>{{ doctor.address.substring(0, doctor.address.length - 11) }} <br> Voto Medio: {{
+                            calculateRating(doctor) }} <br> Numero di Recensioni: {{ doctor.reviews.length }}</v-card-text>
+                        <div class="d-flex">
+                            <v-card-text>Numero di Voti: {{ calculateVoteCount(doctor) }}</v-card-text>
+                            <div v-if="doctor.sponsorships.length > 0" class="sponsorship-star">
+                                <i class="fa fa-star"></i>
+                            </div>
                         </div>
-                    </div>
-                    <v-card-actions>
-                        <router-link class="btn detail-btn text-uppercase"
-                            :to="{ name: 'DoctorDetail', params: { slug: doctor.slug } }"> Mostra dettagli
-                        </router-link>
-                        <v-btn variant="text" color="teal-accent-4" @click="revealDoctor(doctor)">
-                            Contatti
-                        </v-btn>
-                    </v-card-actions>
+                        <v-card-actions>
+                            <router-link class="btn detail-btn text-uppercase"
+                                :to="{ name: 'DoctorDetail', params: { slug: doctor.slug } }"> Mostra dettagli
+                            </router-link>
+                            <v-btn variant="text" color="teal-accent-4" @click="revealDoctor(doctor)">
+                                Contatti
+                            </v-btn>
+                        </v-card-actions>
 
-                    <v-expand-transition>
-                        <v-card v-if="doctor.reveal" class="v-card--reveal" style="height: 100%;">
-                            <v-card-text class="pb-0">
-                                <p class="text-h4 text--primary">
-                                    Contattami
-                                </p>
-                                <div>{{ doctor.user.email }}</div><br>
-                                <span>{{ doctor.tel }}</span>
-                            </v-card-text>
-                            <v-card-actions class="pt-0">
-                                <v-btn variant="text" color="teal-accent-4" @click="hideReveal(doctor)">
-                                    Chiudi
-                                </v-btn>
-                            </v-card-actions>
-                        </v-card>
-                    </v-expand-transition>
-                    
-                </v-card>
+                        <v-expand-transition>
+                            <v-card v-if="doctor.reveal" class="v-card--reveal" style="height: 100%;">
+                                <v-card-text class="pb-0">
+                                    <p class="text-h4 text--primary">
+                                        Contattami
+                                    </p>
+                                    <div>{{ doctor.user.email }}</div><br>
+                                    <span>{{ doctor.tel }}</span>
+                                </v-card-text>
+                                <v-card-actions class="pt-0">
+                                    <v-btn variant="text" color="teal-accent-4" @click="hideReveal(doctor)">
+                                        Chiudi
+                                    </v-btn>
+                                </v-card-actions>
+                            </v-card>
+                        </v-expand-transition>
+
+                    </v-card>
                 </router-link>
             </div>
-            
+
         </div>
     </div>
 </template>
@@ -115,29 +116,29 @@ export default {
 
             axios.get(`${this.store.apiBaseUrl}/doctors`, {
                 params: {
-                
-                
-                specialty: this.selectedProfession,
-                min_vote_average: this.selectedRating,
-                name: this.searchName
-                 }
-                })
+
+
+                    specialty: this.selectedProfession,
+                    min_vote_average: this.selectedRating,
+                    name: this.searchName
+                }
+            })
                 .then(response => {
                     const doctorsWithSponsorship = [];
-            const doctorsWithoutSponsorship = [];
+                    const doctorsWithoutSponsorship = [];
 
-            response.data.results.forEach(doctor => {
-            if (doctor.sponsorships.length > 0) {
-                doctorsWithSponsorship.push(doctor);
-            } else {
-                doctorsWithoutSponsorship.push(doctor);
-            }
-        });
-        console.log('Doctors with sponsorship:', doctorsWithSponsorship);
-        console.log('Doctors without sponsorship:', doctorsWithoutSponsorship);
-        // Unisci i due array, mettendo prima quelli con sponsorizzazione
-        this.doctors = [...doctorsWithSponsorship, ...doctorsWithoutSponsorship];
-        console.log('Final doctors list:', this.doctors);
+                    response.data.results.forEach(doctor => {
+                        if (doctor.sponsorships.length > 0) {
+                            doctorsWithSponsorship.push(doctor);
+                        } else {
+                            doctorsWithoutSponsorship.push(doctor);
+                        }
+                    });
+                    console.log('Doctors with sponsorship:', doctorsWithSponsorship);
+                    console.log('Doctors without sponsorship:', doctorsWithoutSponsorship);
+                    // Unisci i due array, mettendo prima quelli con sponsorizzazione
+                    this.doctors = [...doctorsWithSponsorship, ...doctorsWithoutSponsorship];
+                    console.log('Final doctors list:', this.doctors);
                 })
                 .catch(error => {
                     console.error('Error fetching doctors:', error);
@@ -185,11 +186,11 @@ export default {
                         } else {
                             doctorsWithoutSponsorship.push(doctor);
                         }
-        });
+                    });
 
                     // Unisci i due array, mettendo prima quelli con sponsorizzazione
                     this.doctors = [...doctorsWithSponsorship, ...doctorsWithoutSponsorship];
-        
+
                     this.loading = false;
                     console.log('Doctors after searching:', this.doctors);
 
@@ -221,7 +222,7 @@ export default {
             return doctor.votes.length;
         },
         setDefaultImage(event) {
-        event.target.src = '/images/avatar_doctor.jpg';
+            event.target.src = '/images/avatar_doctor.jpg';
         }
     },
     created() {
@@ -229,15 +230,16 @@ export default {
         this.selectedProfession = params.get('profession') || '';
         this.selectedCity = params.get('city') || 'Lombardia';
         this.fetchDoctors();
-        
+
     }
 }
 </script>
 
 <style lang="scss" scoped>
-.results-number{
+.results-number {
     font-size: 0.9em;
 }
+
 img {
     width: 100%;
 }
@@ -260,14 +262,16 @@ img {
     background-color: rgb(245, 255, 249);
     border: 1px solid white
 }
+
 .sponsorship-star {
-    
-    z-index: 999; 
+
+    z-index: 999;
 }
 
 .fa-star {
-    color: yellow; 
+    color: yellow;
 }
+
 .loader {
     border: 16px solid #f3f3f3;
     border-top: 16px solid #3498db;
@@ -299,5 +303,4 @@ img {
     .mediaq {
         display: block !important;
     }
-}
-</style>
+}</style>
