@@ -1,9 +1,13 @@
 <template>
-    <div class="container mb-5 mypt">
-        <h1 class="text-center mb-5 mt-5 text-uppercase">{{ title }}</h1>
-        <div class="row g-4">
-            <div class="col-12 col-md-6 col-lg-4" v-for="member in members">
-                <div class="card dnd-card flex-fill">
+    <div class="my-bg-primary">
+        <div class="container mypt">
+            <h1 class="text-center mb-5 mt-5 text-white text-uppercase">{{ title }}</h1>
+            <div class="row gy-5 justify-content-center mt-4 py-5">
+                <div class="col-12 col-md-6 col-lg-4 col-xl-3" v-for="member in members">
+
+                    <DoctorCards :name="member.name" :surname="member.last_name" :specialty="member.type"
+                        :image="member.avatar" @error="setDefaultImage($event, member)" :slg="member.name" />
+                    <!-- <div class="card dnd-card flex-fill">
                     <div class="d-flex justify-content-center">
                         <div class="img-container rounded-circle ">
                             <img :src="member.avatar" class="card-img-top " :alt="member.name">
@@ -23,13 +27,15 @@
                         </div>
 
                     </div>
+                </div> -->
                 </div>
-            </div>
 
+            </div>
         </div>
     </div>
 </template>
 <script>
+import DoctorCards from '@/components/DoctorCards.vue';
 export default {
     name: 'AppOurTeam',
     data() {
@@ -37,42 +43,52 @@ export default {
             title: 'Il nostro team',
             members: [
                 {
-                    name: 'Chiara Pontello',
+                    name: 'Chiara',
+                    last_name: 'Pontello',
                     type: 'Front-end',
                     avatar: 'images/avatar-team/1706517661745.jpg'
                 },
                 {
-                    name: 'Matteo Tuveri',
+                    name: 'Matteo',
+                    last_name: 'Tuveri',
                     type: 'Front-end',
                     avatar: 'images/avatar-team/IMG-20240128-WA0022.jpeg'
                 },
                 {
-                    name: 'Matteo Pupino',
+                    name: 'Matteo',
+                    last_name: 'Pupino',
                     type: 'Front-end',
                     avatar: 'images/avatar-team/eqweqweqe.PNG'
                 },
                 {
-                    name: 'Cristian Ursino',
+                    name: 'Cristian',
+                    last_name: 'Ursino',
                     type: 'Back-end',
                     avatar: 'images/avatar-team/20240129_090738.jpg'
                 },
                 {
-                    name: 'Valerio Bartoletti',
+                    name: 'Valerio',
+                    last_name: 'Bartoletti',
                     type: 'Back-end',
                     avatar: 'images/avatar-team/Picsart_23-04-17_10-56-56-465.jpg'
                 },
                 {
-                    name: 'Michele Ebau',
-                    type: 'Back-end',
+                    name: 'Michele',
+                    last_name: 'Ebau',
+                    type: 'Security',
                     avatar: 'images/avatar-team/IMG_9317.JPG'
                 },
             ]
         }
-    }
+    },
+    components: {
+        DoctorCards,
+    },
 }
 </script>
 <style lang="scss" scoped>
 @import "@/assets/styles/partials/_variables.scss";
+
 .img-container {
     width: 200px;
     height: 200px;
@@ -88,7 +104,7 @@ export default {
 
 .dnd-card {
     border: 2px solid $marian-blue;
-;
+    ;
     background-color: $honolulu-blue;
     transition: transform 0.2s;
 }
@@ -114,7 +130,8 @@ export default {
     background-color: #4d2c18;
     border-color: #4d2c18;
 }
-.mypt{
+
+.mypt {
     padding-top: 80px
 }
 </style>
