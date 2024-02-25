@@ -36,8 +36,7 @@
                     :subtitle="formatSpecialties(doctor.specialties)" hover link>
                     <router-link :to="{ name: 'DoctorDetail', params: { slug: doctor.slug } }"></router-link>
                     <v-avatar size="70" class="ms-5">
-                        <img :src="doctor.image ? store.imagesBaseUrl + doctor.image : '/images/avatar_doctor.jpg'"
-                            alt="Avatar">
+                        <img :src="store.imagesBaseUrl + doctor.image" @error="setDefaultImage" alt="Avatar">
                     </v-avatar>
                     <v-card-text>{{ doctor.address }} <br> Voto Medio: {{ calculateRating(doctor) }} <br> Numero di Recensioni: {{ doctor.reviews.length }}</v-card-text>
                     <div class="d-flex">
@@ -221,6 +220,9 @@ export default {
         calculateVoteCount(doctor) {
             return doctor.votes.length;
         },
+        setDefaultImage(event) {
+        event.target.src = '/images/avatar_doctor.jpg';
+        }
     },
     created() {
         const params = new URLSearchParams(window.location.search);

@@ -123,10 +123,7 @@
           <div class=" bg-white py-4 row ">
             <div class="col-10 col-md-4">
               <div class="doctor-img">
-                <img :src="doctor.image
-                  ? store.imagesBaseUrl + doctor.image
-                  : '/images/avatar_doctor.jpg'
-                  " :alt="doctor.user.last_name" />
+                <img :src="store.imagesBaseUrl + doctor.image" @error="setDefaultImage" alt="Avatar">
               </div>
             </div>
 
@@ -136,7 +133,8 @@
                 <i v-if="doctor.sponsorships.length > 0" class="fa-solid fa-circle-check ms-2"></i>
               </div>
               <span class="speciaties d-block mb-1">{{ doctor.specialties[0].name }}</span>
-              <span class="address">{{ doctor.address }}</span>
+              <span class="address">{{ doctor.address }}</span><br>
+              <span class="address">Servizi: {{ doctor.services }}</span>
               <div class="doctor-rating d-flex mt-2">
                 <div>
                   <!-- <i class="fa-solid fa-star" v-for="n in 5"></i> -->
@@ -500,6 +498,9 @@ export default {
           errorDiv.remove();
         }
       })
+    },
+    setDefaultImage(event) {
+        event.target.src = '/images/avatar_doctor.jpg';
     }
   },
   created() {

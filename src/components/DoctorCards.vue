@@ -1,7 +1,7 @@
 <template>
     <div class="bg-white mt-5 hover-effect">
         <div class="roundup">
-            <img :src="image" :alt="name + ' ' + surname" class="w-100">
+            <img :src="image" :alt="name + ' ' + surname" @error="setDefaultImage" class="w-100">
         </div>
         <div class="my-card-adjust">
             
@@ -39,6 +39,12 @@
                
             }
         },
+        methods: {
+        setDefaultImage(event) {
+            event.target.src = '/images/avatar_doctor.jpg'; // Impostare l'immagine di default se si verifica un errore durante il caricamento dell'immagine
+        }
+    }
+
     }
 </script>
 
