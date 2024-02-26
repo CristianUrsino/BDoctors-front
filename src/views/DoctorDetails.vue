@@ -289,6 +289,7 @@ export default {
       let data = null;
       if (btnId === 'send-message') {
         data = formDataMessage;
+        delete data.tel;
       }
       else if (btnId === 'send-review') {
         data = formDataReview;
