@@ -43,7 +43,7 @@
                         <div class="d-flex">
                             <v-card-text>Numero di Voti: {{ calculateVoteCount(doctor) }}</v-card-text>
                             <div v-if="doctor.sponsorships.length > 0" class="sponsorship-star">
-                                <i class="fa fa-star"></i>
+                                <i class="fa-solid fa-circle-check ms-2"></i>
                             </div>
                         </div>
                         <v-card-actions>
