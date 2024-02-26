@@ -55,8 +55,8 @@
       </v-layout>
     </v-card>
     <!-- Drawer review -->
-    <v-card class="myz-index">
-      <v-layout>
+    <v-card >
+      <v-layout class="myz-index">
         <v-navigation-drawer v-model="drawer_review" location="right" width="600" temporary>
           <div class="d-flex align-items-center justify-content-between drawer-header">
             <h4 class="pt-3 ps-2">
@@ -684,7 +684,7 @@ img {
         font-size: 1.4em;
       }
       .myz-index {
-        z-index: 9000;
+        z-index: 7000;
       }
       .fa-star.fa-regular {
         color: $honolulu-blue;
