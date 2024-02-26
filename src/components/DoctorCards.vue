@@ -11,7 +11,7 @@
             </div>
             <p class="text-gray text-center text-uppercase">{{ specialty }}</p>
             <div class="text-center mt-1">
-                <span class="text-center">{{ address.substring(0, address.length - 11) }}</span>
+                <span class="text-center">{{ address ? address.substring(0, address.length - 11) : '' }}</span>
             </div>
 
         </div>

@@ -26,16 +26,17 @@
           <li><router-link class="nav-link" active-class="active" :to="{ name: 'Home' }">Home</router-link></li>
           <li><router-link class="nav-link" active-class="active" :to="{ name: 'DoctorSearch' }">Ricerca</router-link>
           </li>
-          <li><router-link class="nav-link" active-class="active" :to="{ name: 'ourTeam' }">Il Nostro team</router-link></li>
+          <li><router-link class="nav-link" active-class="active" :to="{ name: 'ourTeam' }">Il Nostro team</router-link>
+          </li>
 
         </ul>
 
         <div class="gap-2">
-          <button type="button" class="btn btn-light me-3"><a href="http://127.0.0.1:8000/login" target="_blank"
-            rel="noopener noreferrer">Login</a>
+          <button type="button" class="btn btn-light me-3"><a href="http://127.0.0.1:8000/login"
+              rel="noopener noreferrer">Login</a>
           </button>
-          <button type="button" class="btn btn-light"><a href="http://127.0.0.1:8000/register" target="_blank"
-          rel="noopener noreferrer">Registrati</a>
+          <button type="button" class="btn btn-light"><a href="http://127.0.0.1:8000/register"
+              rel="noopener noreferrer">Registrati</a>
           </button>
         </div>
       </div>
@@ -64,12 +65,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.logo-img-wrapper{
-  width:110px
+.logo-img-wrapper {
+  width: 110px
 }
-.nav-logo{
-  width:220px
+
+.nav-logo {
+  width: 220px
 }
+
 .logo {
   display: none;
 }
@@ -124,16 +127,18 @@ button {
 img {
   width: 110px;
 }
+
 @media screen and (max-width: 600px) {
   .nav-items {
     flex-direction: column;
-    font-size: 0.5rem; 
+    font-size: 0.5rem;
   }
 
   button {
     margin-top: 10px;
   }
 }
+
 // Mobile version - hidden hamburger menu
 @media screen and (max-width: 768px) {
   .nav-menu {
@@ -191,14 +196,14 @@ img {
 
 
 }
+
 @media screen and (max-width: 375px) {
   .nav-menu .nav-items li {
-    font-size: 1rem; 
+    font-size: 1rem;
   }
 
   .nav-menu button {
-    font-size: 0.8rem; 
+    font-size: 0.8rem;
     padding: 5px 10px;
   }
-}
-</style>
+}</style>
