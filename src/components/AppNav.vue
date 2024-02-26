@@ -169,7 +169,7 @@ img {
   }
   .nav-menu {
     padding-top: 5px;
-    position: absolute;
+    
     width: 100%;
     z-index: 5000;
     
