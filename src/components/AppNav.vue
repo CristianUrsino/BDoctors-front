@@ -26,14 +26,24 @@
           <li><router-link class="nav-link" active-class="active" :to="{ name: 'Home' }">Home</router-link></li>
           <li><router-link class="nav-link" active-class="active" :to="{ name: 'DoctorSearch' }">Ricerca</router-link>
           </li>
-          <li><router-link class="nav-link" active-class="active" :to="{ name: 'ourTeam' }">Il Nostro team</router-link>
+          <li><router-link class="nav-link" active-class="active" :to="{ name: 'ourTeam' }">Il Nostro team</router-link></li>
+          <li class="nav-link d-none">
+            <a href="http://127.0.0.1:8000/login" class="d-flex justify-content-start align-items-center">
+              <i class="fa-solid fa-right-to-bracket p-0 me-2"></i>
+              <span class="me-1">Login</span>
+            </a>
           </li>
-
+          <li class="nav-link d-none">
+            <a href="http://127.0.0.1:8000/register" class="d-flex justify-content-start align-items-center">
+              <i class="fa-solid fa-user p-0 me-2"></i>
+              <span class="me-1">Registrati</span>
+            </a>
+          </li>
         </ul>
 
-        <div class="gap-2">
-          <button type="button" class="btn btn-light me-3"><a href="http://127.0.0.1:8000/login"
-              rel="noopener noreferrer">Login</a>
+        <div class="log-in-menu gap-2 d-flex justify-content-center">
+          <button type="button" class="btn btn-light me-3"><a href="http://127.0.0.1:8000/login" target="_blank"
+            rel="noopener noreferrer">Login</a>
           </button>
           <button type="button" class="btn btn-light"><a href="http://127.0.0.1:8000/register"
               rel="noopener noreferrer">Registrati</a>
@@ -139,18 +149,37 @@ img {
   }
 }
 
+@media screen and (max-width:960px){
+.log-in-menu{
+  flex-direction: column ;
+}
+}
+
 // Mobile version - hidden hamburger menu
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 848px) {
+  .nav-link.d-none{
+    display:block !important;
+  }
+  
+  .log-in-menu{
+    display:none !important;
+  }
+  .nav-logo{
+    display:none;
+  }
   .nav-menu {
-    padding-top: 10px;
+    padding-top: 5px;
     position: absolute;
     width: 100%;
     z-index: 5000;
+    
   }
 
   .open-menu {
     opacity: 1;
     height: auto;
+    display:flex;
+    justify-content: space-between
   }
 
   .closed-menu {
@@ -162,11 +191,16 @@ img {
   .nav-content {
     z-index: 1000;
     position: relative;
-    transition: all 0.2s ease-out;
+    transition: all 0,2s ease-out;
   }
 
   .nav-items {
     flex-direction: column;
+    li{
+    border-bottom: 1px ;
+    width:100%;
+    margin-bottom: 10px;
+    }
   }
 
   .hidden {
@@ -191,7 +225,6 @@ img {
     justify-content: space-between;
     align-items: center;
     list-style: none;
-
   }
 
 
