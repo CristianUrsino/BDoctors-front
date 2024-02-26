@@ -134,7 +134,8 @@
               </div>
               <span class="speciaties d-block mb-1">{{ doctor.specialties[0].name }}</span>
               <span class="address">{{ doctor.address }}</span><br>
-              <span class="address">Servizi: {{ doctor.services }}</span>
+              <span class="address">Servizi: {{ doctor.services }}</span><br>
+              <span>Numero di telefono:{{ doctor.tel }}</span>
               <div class="doctor-rating d-flex mt-2">
                 <div>
                   <!-- <i class="fa-solid fa-star" v-for="n in 5"></i> -->
