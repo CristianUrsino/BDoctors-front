@@ -105,7 +105,7 @@
     </v-card>
     <!--Card del Medico-->
     <div class="container">
-      <div class="row">
+      <div class="row mypd1">
         <div v-if="this.feedback" class="alert alert-primary text-center" role="alert">
           <h4 class="alert-heading">Il tuo messaggio è stato inviato con successo!</h4>
           <i class="fa-solid fa-xmark" @click="this.feedback = false"></i>
@@ -517,6 +517,9 @@ export default {
   border: 1px solid #ffc720;
   background-color:#ffca2c
 }
+.mypd1{
+  margin-top:100px
+}
 .reset-btn:hover{
   background-color:#ffca29;
   border-color:#ffc720;
@@ -566,7 +569,7 @@ img {
       cursor: pointer
     }
   }
-
+ 
   .btn.btn-warning:hover {
     background-color: #ffca2c !important;
     border: 1px solid rgb(214, 214, 214);
@@ -720,7 +723,7 @@ img {
     .container {
         padding-top: 180px;
     }
-
+    
     .mediaq {
         display: block !important;
     }
