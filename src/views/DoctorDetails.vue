@@ -1,7 +1,7 @@
 <template>
   <div class="single-doctor-section py-5">
     <!-- Drawer message -->
-    <v-card>
+    <v-card class="myz-index">
       <v-layout>
         <v-navigation-drawer v-model="drawer" location="right" width="600" temporary>
           <div class="d-flex align-items-center justify-space-between drawer-header">
@@ -55,7 +55,7 @@
       </v-layout>
     </v-card>
     <!-- Drawer review -->
-    <v-card>
+    <v-card class="myz-index">
       <v-layout>
         <v-navigation-drawer v-model="drawer_review" location="right" width="600" temporary>
           <div class="d-flex align-items-center justify-content-between drawer-header">
@@ -682,7 +682,9 @@ img {
       .fa-star {
         font-size: 1.4em;
       }
-
+      .myz-index {
+        z-index: 9000;
+      }
       .fa-star.fa-regular {
         color: $honolulu-blue;
       }
