@@ -80,4 +80,9 @@ export default {
 
 .my-margin {
     margin-top: 80px;
+    @media screen and (max-width: 848px) {
+        h1 {
+            margin-top:150px
+        }
+}
 }</style>
