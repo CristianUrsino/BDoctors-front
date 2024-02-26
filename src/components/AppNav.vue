@@ -26,7 +26,8 @@
           <li><router-link class="nav-link" active-class="active" :to="{ name: 'Home' }">Home</router-link></li>
           <li><router-link class="nav-link" active-class="active" :to="{ name: 'DoctorSearch' }">Ricerca</router-link>
           </li>
-          <li><router-link class="nav-link" active-class="active" :to="{ name: 'ourTeam' }">Il Nostro team</router-link></li>
+          <li><router-link class="nav-link" active-class="active" :to="{ name: 'ourTeam' }">Il Nostro team</router-link>
+          </li>
           <li class="nav-link d-none">
             <a href="http://127.0.0.1:8000/login" class="d-flex justify-content-start align-items-center">
               <i class="fa-solid fa-right-to-bracket p-0 me-2"></i>
@@ -42,8 +43,7 @@
         </ul>
 
         <div class="log-in-menu gap-2 d-flex justify-content-center">
-          <button type="button" class="btn btn-light me-3"><a href="http://127.0.0.1:8000/login" target="_blank"
-            rel="noopener noreferrer">Login</a>
+          <button type="button" class="btn btn-light me-3"><a href="http://127.0.0.1:8000/login">Login</a>
           </button>
           <button type="button" class="btn btn-light"><a href="http://127.0.0.1:8000/register"
               rel="noopener noreferrer">Registrati</a>
@@ -149,36 +149,38 @@ img {
   }
 }
 
-@media screen and (max-width:960px){
-.log-in-menu{
-  flex-direction: column ;
-}
+@media screen and (max-width:960px) {
+  .log-in-menu {
+    flex-direction: column;
+  }
 }
 
 // Mobile version - hidden hamburger menu
 @media screen and (max-width: 848px) {
-  .nav-link.d-none{
-    display:block !important;
+  .nav-link.d-none {
+    display: block !important;
   }
-  
-  .log-in-menu{
-    display:none !important;
+
+  .log-in-menu {
+    display: none !important;
   }
-  .nav-logo{
-    display:none;
+
+  .nav-logo {
+    display: none;
   }
+
   .nav-menu {
     padding-top: 5px;
-    
+
     width: 100%;
     z-index: 5000;
-    
+
   }
 
   .open-menu {
     opacity: 1;
     height: auto;
-    display:flex;
+    display: flex;
     justify-content: space-between
   }
 
@@ -191,15 +193,16 @@ img {
   .nav-content {
     z-index: 1000;
     position: relative;
-    transition: all 0,2s ease-out;
+    transition: all 0, 2s ease-out;
   }
 
   .nav-items {
     flex-direction: column;
-    li{
-    border-bottom: 1px ;
-    width:100%;
-    margin-bottom: 10px;
+
+    li {
+      border-bottom: 1px;
+      width: 100%;
+      margin-bottom: 10px;
     }
   }
 
